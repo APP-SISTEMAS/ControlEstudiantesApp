@@ -8,14 +8,14 @@ GO
 
 -- Crear la tabla Departamento
 CREATE TABLE Departamento (
-    id INT PRIMARY KEY IDENTITY NOT NULL,
+    id INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
     nombre VARCHAR(30) UNIQUE NOT NULL
 )
 GO
 
 -- Crear la tabla Municipio
 CREATE TABLE Municipio (
-    id INT PRIMARY KEY IDENTITY NOT NULL,
+    id INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
     id_departamento INT NOT NULL,
     municipio VARCHAR(30) UNIQUE NOT NULL,
     FOREIGN KEY (id_departamento) REFERENCES Departamento(id)
@@ -24,14 +24,14 @@ GO
 
 -- Crear la tabla Tipo_Sangre
 CREATE TABLE Tipo_Sangre (
-    id INT PRIMARY KEY IDENTITY NOT NULL,
+    id INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
     nombre VARCHAR(5) UNIQUE NOT NULL
 )
 GO
 
 -- Crear la tabla Estudiante
 CREATE TABLE Estudiante (
-    id INT PRIMARY KEY IDENTITY NOT NULL,
+    id INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
     nombre VARCHAR(20) NOT NULL,
     apellido VARCHAR(20) NOT NULL,
     fecha_nacimiento SMALLDATETIME NOT NULL,
@@ -62,14 +62,14 @@ GO
 
 -- Crear la tabla Asignatura
 CREATE TABLE Asignatura (
-    id INT PRIMARY KEY IDENTITY NOT NULL,
+    id INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
     nombre VARCHAR(20) NOT NULL
 )
 GO
 
 -- Crear la tabla Notas
 CREATE TABLE Notas (
-    id INT PRIMARY KEY IDENTITY NOT NULL,
+    id INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
     id_estudiante INT NOT NULL,
     id_asignatura INT NOT NULL,
     nota1 DECIMAL(5, 2),
