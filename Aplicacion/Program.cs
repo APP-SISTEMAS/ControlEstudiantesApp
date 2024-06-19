@@ -11,6 +11,7 @@ namespace EstructurasDatos
             do
             {
                 Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.WriteLine("Aplicacion Control de Centro Educativo");
                 Console.WriteLine("==================================");
                 Console.WriteLine("1)Gestion de Estudiante");
@@ -46,6 +47,7 @@ namespace EstructurasDatos
                         break;
                 }
             } while (continuar);
+            Console.ResetColor();
         }
     }
 }

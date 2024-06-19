@@ -20,36 +20,48 @@ namespace EstructurasDatos
         public static Nota notas= new Nota();
         public static void GestionNota()
         {
-            Console.Clear();
-            Console.WriteLine("Gestion de Notas por clase");
-            Console.WriteLine("1)Registrar");
-            Console.WriteLine("2)Actualizar");
-            Console.WriteLine("3)Mostrar notas por estudiante");
-            Console.WriteLine("4)Mostrar notas por clase");
-            Console.WriteLine("Seleccione una opcion:");
-            int numeroOpcion = Convert.ToInt32(Console.ReadLine());
-            switch (numeroOpcion)
+            bool continuar = true;
+            do
             {
-                case 1:
-                    Console.WriteLine("Registrar Nota");
-                    notas.Registrar();
-                    break;
-                case 2:
-                    Console.WriteLine("Actualizar Nota");
-                    notas.Actualizar();
-                    break;
-                case 3:
-                    Console.WriteLine("Mostrar notas por estudiante");
-                    notas.MostrarNotasGeneralesPorEstudiante();
-                    break;
-                case 4:
-                    Console.WriteLine("Mostrar notas por clase");
-                    notas.MostrarNotasPorClase();
-                    break;
-                default:
-                    Console.WriteLine("Opcion no valida");
-                    break;
-            }
+                Console.Clear();
+                Console.ForegroundColor = ConsoleColor.DarkCyan;
+                Console.WriteLine("Gestion de Notas por clase");
+                Console.WriteLine("1)Registrar");
+                Console.WriteLine("2)Actualizar");
+                Console.WriteLine("3)Mostrar notas por estudiante");
+                Console.WriteLine("4)Mostrar notas por clase");
+                Console.WriteLine("0)Salir");
+                Console.WriteLine("Seleccione una opcion:");
+                int numeroOpcion = Convert.ToInt32(Console.ReadLine());
+                Console.ForegroundColor = ConsoleColor.Green;
+                switch (numeroOpcion)
+                {
+                    case 1:
+                        Console.WriteLine("Registrar Nota");
+                        notas.Registrar();
+                        break;
+                    case 2:
+                        Console.WriteLine("Actualizar Nota");
+                        notas.Actualizar();
+                        break;
+                    case 3:
+                        Console.WriteLine("Mostrar notas por estudiante");
+                        notas.MostrarNotasGeneralesPorEstudiante();
+                        break;
+                    case 4:
+                        Console.WriteLine("Mostrar notas por clase");
+                        notas.MostrarNotasPorClase();
+                        break;
+                    case 0:
+                        continuar = false;
+                        break;
+                    default:
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("Opcion no valida");
+                        break;
+                }
+                Console.ResetColor();
+            } while (continuar);
         }
         public void Registrar()
         {
@@ -65,6 +77,7 @@ namespace EstructurasDatos
                 ListarAsignatura();
                 Console.WriteLine("De que parcial desea agregar nota (1,2,3,4)?");
                 int numeroOpcion = Convert.ToInt32(Console.ReadLine());
+                Console.ForegroundColor = ConsoleColor.Green;
                 switch (numeroOpcion)
                 {
                     case 1:
@@ -88,9 +101,11 @@ namespace EstructurasDatos
                         break;
                 }
                 
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("¿Desea actualizar otro campo? (s/n)");
                 string respuesta = Console.ReadLine().ToLower();
                 if (respuesta != "s") continuar = false;
+                Console.ResetColor();
 
             } while (continuar);
             CalcularPromedio();
@@ -109,6 +124,7 @@ namespace EstructurasDatos
                 ListarAsignatura();
                 Console.WriteLine("De que parcial desea corregir o modificar su nota (1,2,3,4)?");
                 int numeroOpcion = Convert.ToInt32(Console.ReadLine());
+                Console.ForegroundColor = ConsoleColor.Green;
                 switch (numeroOpcion)
                 {
                     case 1:
@@ -135,10 +151,12 @@ namespace EstructurasDatos
                         Console.WriteLine("Opcion no valida");
                         break;
                 }
-                
+                Console.WriteLine("Nota actualizada correctamente");
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("¿Desea actualizar otro campo? (s/n)");
                 string respuesta = Console.ReadLine().ToLower();
                 if (respuesta != "s") continuar = false;
+                Console.ResetColor();
 
             } while (continuar);
             CalcularPromedio();
@@ -153,6 +171,7 @@ namespace EstructurasDatos
                 Console.WriteLine("==================================");
                 Console.WriteLine("Seleccione un estudiante:");
                 ListarEstudiante();
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("Promedio de notas por parcial de todas sus clases:");
                 Console.WriteLine("==================================");
                 Console.WriteLine("Notas asignatura 1");
@@ -180,9 +199,11 @@ namespace EstructurasDatos
                 Console.WriteLine("\tAprobado: " + aprobado);
                 Console.WriteLine("==================================");
 
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("¿Desea ver otro estudiante? (s/n)");
                 string respuesta = Console.ReadLine().ToLower();
                 if (respuesta != "s") continuar = false;
+                Console.ResetColor();
 
             } while (continuar);
         }
@@ -196,6 +217,7 @@ namespace EstructurasDatos
                 Console.WriteLine("==================================");
                 Console.WriteLine("Seleccione una asignatura:");
                 ListarAsignatura();
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("Promedio de notas por parcial de todas sus clases:");
                 Console.WriteLine("Notas estudiante 1");
                 Console.Write("\tNota 1: " + nota1);
@@ -222,16 +244,18 @@ namespace EstructurasDatos
                 Console.WriteLine("\tAprobado: " + aprobado);
                 Console.WriteLine("==================================");
 
-
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("¿Desea ver otra asignatura? (s/n)");
                 string respuesta = Console.ReadLine().ToLower();
                 if (respuesta != "s") continuar = false;
+                Console.ResetColor();
 
             } while (continuar);
         }
         public void ListarEstudiante()
         {
             Console.Clear();
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine("Listado de Estudiantes");
             Console.WriteLine("1)Estudiante 1");
             Console.WriteLine("2)Estudiante 2");
@@ -253,10 +277,12 @@ namespace EstructurasDatos
                     Console.WriteLine("Estudiante no valido");
                     break;
             }
+            Console.ResetColor();
         }
         public void ListarAsignatura()
         {
             Console.Clear();
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine("Listado de Asignaturas");
             Console.WriteLine("1)Asignatura 1");
             Console.WriteLine("2)Asignatura 2");
@@ -278,6 +304,7 @@ namespace EstructurasDatos
                     Console.WriteLine("Asignatura no valida");
                     break;
             }
+            Console.ResetColor();
         }
         public void CalcularPromedio()
         {

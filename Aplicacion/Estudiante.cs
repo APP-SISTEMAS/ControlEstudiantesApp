@@ -27,47 +27,53 @@ namespace EstructurasDatos
 
         public static void GestionEstudiante()
         {
-            Console.Clear();
-            Console.WriteLine("Gestion de Estudiante");
-            Console.WriteLine("1)Registrar");
-            Console.WriteLine("2)Actualizar");
-            Console.WriteLine("3)Deshabilitar");
-            Console.WriteLine("4)Habilitar");
-            Console.WriteLine("5)Mostrar Informacion Estudiante");
-            Console.WriteLine("Seleccione una opcion:");
-              int numeroOpcion = Convert.ToInt32(Console.ReadLine());
-            switch (numeroOpcion)
+            bool continuar = true;
+            do
             {
-                case 1:
-                    Console.WriteLine("Registrar Estudiante");
-                    estudiante1.Registrar();
-                    break;
-                case 2:
-                    Console.WriteLine("Actualizar Estudiante");
-                    estudiante1.Actualizar();
-                    break;
-                case 3:
-                    Console.WriteLine("Deshabilitar Estudiante");
-                    estudiante1.Deshabilitar();
-                    break;
-                case 4:
-                    Console.WriteLine("Habilitar Estudiante");
-                    estudiante1.Habilitar();
-                    break;
-                case 5:
-                    Console.WriteLine("Mostrar Informacion Estudiante");
-                    estudiante1.MostrarInformacion();
-                    break;
-                default:
-                    Console.WriteLine("Opcion no valida");
-                    break;
-            }
+                Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine("Gestion de Estudiante");
+                Console.WriteLine("1)Registrar");
+                Console.WriteLine("2)Actualizar");
+                Console.WriteLine("3)Deshabilitar");
+                Console.WriteLine("4)Habilitar");
+                Console.WriteLine("5)Mostrar Informacion Estudiante");
+                Console.WriteLine("0)Salir");
+                Console.WriteLine("Seleccione una opcion:");
+                int numeroOpcion = Convert.ToInt32(Console.ReadLine());
+                switch (numeroOpcion)
+                {
+                    case 1:
+                        estudiante1.Registrar();
+                        break;
+                    case 2:
+                        estudiante1.Actualizar();
+                        break;
+                    case 3:
+                        estudiante1.Deshabilitar();
+                        break;
+                    case 4:
+                        estudiante1.Habilitar();
+                        break;
+                    case 5:
+                        estudiante1.MostrarInformacion();
+                        break;
+                    case 0:
+                        continuar = false;
+                        break;
+                    default:
+                        Console.WriteLine("Opcion no valida");
+                        break;
+                }
+                Console.ResetColor();
+            } while (continuar);
         }
 
 
         public void Registrar()
         {
             Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Registro de Estudiante");
             Console.WriteLine("Ingrese el nombre del estudiante:");
             nombre = Console.ReadLine();
@@ -94,6 +100,8 @@ namespace EstructurasDatos
             Console.WriteLine("Ingrese el tutor del estudiante:");
             tutor = Console.ReadLine();
             Console.WriteLine("Estudiante registrado correctamente");
+            Console.ReadKey();
+            Console.ResetColor();
         }
         public void Actualizar()
         {
@@ -106,6 +114,7 @@ namespace EstructurasDatos
 
             while (continuar)
             {
+                Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.WriteLine("¿Qué campo desea actualizar?");
                 Console.Write("1) Nombre \t\t2) Apellido" +
                               "\n3) Fecha de Nacimiento \t4) Identificación" +
@@ -116,6 +125,7 @@ namespace EstructurasDatos
                               "\nSeleccione una opción: ");
                 int numeroOpcion = Convert.ToInt32(Console.ReadLine());
 
+                Console.ForegroundColor = ConsoleColor.Green;
                 switch (numeroOpcion)
                 {
                     case 1:
@@ -183,12 +193,15 @@ namespace EstructurasDatos
                         break;
                 }
 
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("¿Desea actualizar otro campo? (s/n)");
                 string respuesta = Console.ReadLine().ToLower();
                 if (respuesta != "s") continuar = false;
+                Console.ResetColor();
             }
-
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Estudiante actualizado correctamente");
+            Console.ResetColor();
             Console.ReadKey();
         }
 
@@ -198,10 +211,14 @@ namespace EstructurasDatos
             Console.WriteLine("Deshabilitar Estudiante");
             Console.WriteLine("Que estudiante desea deshabilitar?");
             Listar();
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Ingrese el motivo de la deshabilitacion:");
+            Console.ResetColor();
             string motivo = Console.ReadLine();
             activo = false;
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Estudiante deshabilitado correctamente");
+            Console.ResetColor();
             Console.ReadKey();
         }
         public void Habilitar()
@@ -211,7 +228,9 @@ namespace EstructurasDatos
             Console.WriteLine("Que estudiante desea habilitar?");
             Listar();
             activo = true;
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Estudiante habilitado correctamente");
+            Console.ResetColor();
             Console.ReadKey();
         }
         public void MostrarInformacion()
@@ -222,6 +241,7 @@ namespace EstructurasDatos
             bool continuar = true;
             while (continuar)
             {
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("Ficha Estudiantil");
                 Console.WriteLine("Nombre: " + nombre);
                 Console.WriteLine("Apellido: " + apellido);
@@ -236,17 +256,17 @@ namespace EstructurasDatos
                 Console.WriteLine("Tipo de Sangre: " + tipoSangre);
                 Console.WriteLine("Tutor: " + tutor);
                 Console.WriteLine("Activo: " + activo);
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("¿Desea ver la información de otro estudiante? (s/n)");
                 string respuesta = Console.ReadLine().ToLower();
                 if (respuesta != "s") continuar = false;
-                
+                Console.ResetColor();               
             }
-            
-            Console.ReadKey();
         }
         public void Listar()
         {
             Console.Clear();
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine("Listado de Estudiantes");
             Console.WriteLine("1)Estudiante 1");
             Console.WriteLine("2)Estudiante 2");
@@ -268,6 +288,7 @@ namespace EstructurasDatos
                     Console.WriteLine("Estudiante no valido");
                     break;
             }
+            Console.ResetColor();
         }
     }
 }
