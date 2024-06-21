@@ -17,7 +17,7 @@ GO
 CREATE TABLE Municipio (
     id INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
     id_departamento INT NOT NULL,
-    municipio VARCHAR(30) UNIQUE NOT NULL,
+    municipio VARCHAR(30) NOT NULL,
     FOREIGN KEY (id_departamento) REFERENCES Departamento(id)
 )
 GO
@@ -51,8 +51,8 @@ CREATE TABLE Estudiante (
 )
 GO
 
--- Crear la tabla Estudiante_Activo
-CREATE TABLE Estudiante_Activo (
+-- Crear la tabla Log_Estudiante
+CREATE TABLE Log_Estudiante (
     id_estudiante INT PRIMARY KEY NOT NULL,
     estado BIT NOT NULL,
     motivo VARCHAR(100),
@@ -63,7 +63,8 @@ GO
 -- Crear la tabla Asignatura
 CREATE TABLE Asignatura (
     id INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
-    nombre VARCHAR(20) NOT NULL
+    nombre VARCHAR(20) NOT NULL,
+	activo bit not null
 )
 GO
 

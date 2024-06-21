@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Aplicacion
+namespace Aplicacion.Models
 {
     internal class Asignatura
     {
-        int id;
-        string asignatura;
-        bool activo;
+        int id {  get; set; }
+        string asignatura {  get; set; }
+        bool activo {  get; set; }
 
         public static Asignatura asignatura1 = new Asignatura();
 
@@ -49,7 +49,7 @@ namespace Aplicacion
                         Console.Clear();
                         ListarAsignaturas();
                         Console.ReadKey();
-                        break;                        
+                        break;
                     case 3:
                         Console.Clear();
                         Console.WriteLine("Modificar Asignatura");

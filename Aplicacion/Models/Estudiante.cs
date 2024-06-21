@@ -4,24 +4,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EstructurasDatos
+namespace Aplicacion.Models
 {
     internal class Estudiante
     {
-        public int id = 0;
-        public string nombre = "";
-        public string apellido = "";
-        public DateTime? fechaNacimiento;
-        public string identificacion = "";
-        public char genero = 'M';
-        public bool activo = false;
-        public string telefono = "";
-        public string departamento = "";
-        public string municipio = "";
-        public string direccion = "";
-        public string correo = "";
-        public string tipoSangre = "";
-        public string tutor = "";
+        public int id { get; set;}  //Propiedades para la base de datos 
+        public string nombre { get; set;}
+        public string apellido { get; set;}
+        public DateTime? fechaNacimiento { get; set;}
+        public string identificacion { get; set;}
+        public char genero { get; set;}
+        public bool activo { get; set;}
+        public string telefono { get; set;}
+        public string departamento { get; set;}
+        public string municipio { get; set;}
+        public string direccion { get; set;}
+        public string correo { get; set;}
+        public string tipoSangre { get; set;}
+        public string tutor { get; set;}
+        public string motivo { get; set;}
 
         public static Estudiante estudiante1 = new Estudiante();
 
@@ -129,62 +130,62 @@ namespace EstructurasDatos
                 switch (numeroOpcion)
                 {
                     case 1:
-                        Console.WriteLine("Nombre registrado: "+nombre);
+                        Console.WriteLine("Nombre registrado: " + nombre);
                         Console.WriteLine("Ingrese la correccion o actualizacion del nombre:");
                         nombre = Console.ReadLine();
                         break;
                     case 2:
-                        Console.WriteLine("Apellido registrado: "+apellido);
+                        Console.WriteLine("Apellido registrado: " + apellido);
                         Console.WriteLine("Ingrese la correccion o actualizacion del apellido:");
                         apellido = Console.ReadLine();
                         break;
                     case 3:
-                        Console.WriteLine("Fecha de Nacimiento registrada: "+fechaNacimiento);
+                        Console.WriteLine("Fecha de Nacimiento registrada: " + fechaNacimiento);
                         Console.WriteLine("Ingrese la correccion o actualizacion de la fecha de nacimiento:");
                         fechaNacimiento = Convert.ToDateTime(Console.ReadLine());
                         break;
                     case 4:
-                        Console.WriteLine("Identificación registrada: "+identificacion);
+                        Console.WriteLine("Identificación registrada: " + identificacion);
                         Console.WriteLine("Ingrese la correccion o actualizacion de la identificación:");
                         identificacion = Console.ReadLine();
                         break;
                     case 5:
-                        Console.WriteLine("Género registrado: "+genero);
+                        Console.WriteLine("Género registrado: " + genero);
                         Console.WriteLine("Ingrese la correccion o actualizacion del género:");
                         genero = Convert.ToChar(Console.ReadLine());
                         break;
                     case 6:
-                        Console.WriteLine("Telefono registrado: "+telefono);
+                        Console.WriteLine("Telefono registrado: " + telefono);
                         Console.WriteLine("Ingrese la correccion o actualizacion del telefono:");
                         telefono = Console.ReadLine();
                         break;
                     case 7:
-                        Console.WriteLine("Departamento registrado: "+departamento);
+                        Console.WriteLine("Departamento registrado: " + departamento);
                         Console.WriteLine("Ingrese la correccion o actualizacion del departamento de residencia:");
                         departamento = Console.ReadLine();
                         break;
                     case 8:
-                        Console.WriteLine("Municipio registrado: "+municipio);
+                        Console.WriteLine("Municipio registrado: " + municipio);
                         Console.WriteLine("Ingrese la correccion o actualizacion del municipio de residencia:");
                         municipio = Console.ReadLine();
                         break;
                     case 9:
-                        Console.WriteLine("Direccion registrada: "+direccion);
+                        Console.WriteLine("Direccion registrada: " + direccion);
                         Console.WriteLine("Ingrese la correccion o actualizacion de la dirección de residencia:");
                         direccion = Console.ReadLine();
                         break;
                     case 10:
-                        Console.WriteLine("Correo registrado: "+correo);
+                        Console.WriteLine("Correo registrado: " + correo);
                         Console.WriteLine("Ingrese la correccion o actualizacion del correo:");
                         correo = Console.ReadLine();
                         break;
                     case 11:
-                        Console.WriteLine("Tipo de Sangre registrado: "+tipoSangre);
+                        Console.WriteLine("Tipo de Sangre registrado: " + tipoSangre);
                         Console.WriteLine("Ingrese la correccion del tipo de sangre:");
                         tipoSangre = Console.ReadLine();
                         break;
                     case 12:
-                        Console.WriteLine("Tutor registrado: "+tutor);
+                        Console.WriteLine("Tutor registrado: " + tutor);
                         Console.WriteLine("Ingrese la correccion o actualizacion del tutor a cargo del estudiante:");
                         tutor = Console.ReadLine();
                         break;
@@ -214,7 +215,7 @@ namespace EstructurasDatos
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Ingrese el motivo de la deshabilitacion:");
             Console.ResetColor();
-            string motivo = Console.ReadLine();
+            motivo = Console.ReadLine();
             activo = false;
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Estudiante deshabilitado correctamente");
@@ -260,7 +261,7 @@ namespace EstructurasDatos
                 Console.WriteLine("¿Desea ver la información de otro estudiante? (s/n)");
                 string respuesta = Console.ReadLine().ToLower();
                 if (respuesta != "s") continuar = false;
-                Console.ResetColor();               
+                Console.ResetColor();
             }
         }
         public void Listar()

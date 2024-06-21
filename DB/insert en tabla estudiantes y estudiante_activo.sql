@@ -33,7 +33,7 @@ VALUES
 GO
 
 -- Insertar datos en la tabla Estudiante_Activo
-INSERT INTO Estudiante_Activo (id_estudiante, estado, motivo)
+INSERT INTO Log_Estudiante (id_estudiante, estado, motivo)
 VALUES
 ((SELECT id FROM Estudiante WHERE nombre = 'Daniel' AND apellido = 'Navarro'), 0, 'Cambio de colegio'),
 ((SELECT id FROM Estudiante WHERE nombre = 'Pedro' AND apellido = 'Alvarado'), 0, 'Traslado a otra ciudad'),

@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EstructurasDatos
+namespace Aplicacion.Models
 {
     class Municipio
     {
-        int id;
-        string departamento;
-        string municipio;
+        int id {  get; set; }
+        string departamento { get; set; }
+        string municipio { get; set; }
 
         public static Municipio municipio1 = new Municipio();
         public static void GestionMunicipio()

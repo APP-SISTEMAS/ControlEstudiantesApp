@@ -1,12 +1,12 @@
 ﻿using System;
 
 
-namespace EstructurasDatos
+namespace Aplicacion.Models
 {
     class Departamento
     {
-        int id;
-        String departamento;
+        int id {  get; set; }
+        string departamento { get; set; }
 
         public static Departamento departamento1 = new Departamento();
         public static void GestionDepartamento()
@@ -97,9 +97,9 @@ namespace EstructurasDatos
         {
             Console.WriteLine("Listar Departamentos");
             Console.ForegroundColor = ConsoleColor.DarkYellow;
-            for (int i = 0; i <3; i++)
+            for (int i = 0; i < 3; i++)
             {
-                
+
                 Console.WriteLine("====================");
                 Console.Write("Id: " + departamento1.id);
                 Console.WriteLine("\tDepartamento: " + departamento1.departamento);

@@ -4,20 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EstructurasDatos
+namespace Aplicacion.Models
 {
     internal class Nota
     {
-        public int id_estudiante = 0;
-        public int id_asignatura = 0;
-        public float nota1 = 0;
-        public float nota2 = 0;
-        public float nota3 = 0;
-        public float nota4 = 0;
-        public float promedio = 0;
-        public bool aprobado = false;
+        public int id_estudiante { get; set; }
+        public int id_asignatura { get; set; }
+        public float nota1 { get; set; }
+        public float nota2 { get; set; }
+        public float nota3 { get; set; }
+        public float nota4 { get; set; }
+        public float promedio { get; set; }
+        public bool aprobado { get; set; }
 
-        public static Nota notas= new Nota();
+        public static Nota notas = new Nota();
         public static void GestionNota()
         {
             bool continuar = true;
@@ -100,7 +100,7 @@ namespace EstructurasDatos
                         Console.WriteLine("Opcion no valida");
                         break;
                 }
-                
+
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("¿Desea actualizar otro campo? (s/n)");
                 string respuesta = Console.ReadLine().ToLower();
@@ -128,22 +128,22 @@ namespace EstructurasDatos
                 switch (numeroOpcion)
                 {
                     case 1:
-                        Console.WriteLine("Nota del primer parcial actual: "+nota1);
+                        Console.WriteLine("Nota del primer parcial actual: " + nota1);
                         Console.WriteLine("Ingrese la nota del primer parcial:");
                         notas.nota1 = Convert.ToSingle(Console.ReadLine());
                         break;
                     case 2:
-                        Console.WriteLine("Nota del segundo parcial actual: "+nota2);
+                        Console.WriteLine("Nota del segundo parcial actual: " + nota2);
                         Console.WriteLine("Ingrese la nota del segundo parcial:");
                         notas.nota2 = Convert.ToSingle(Console.ReadLine());
                         break;
                     case 3:
-                        Console.WriteLine("Nota del tercer parcial actual: "+nota3);
+                        Console.WriteLine("Nota del tercer parcial actual: " + nota3);
                         Console.WriteLine("Ingrese la nota del tercer parcial:");
                         notas.nota3 = Convert.ToSingle(Console.ReadLine());
                         break;
                     case 4:
-                        Console.Write("Nota del cuarto parcial actual: "+nota4);
+                        Console.Write("Nota del cuarto parcial actual: " + nota4);
                         Console.WriteLine("Ingrese la nota del cuarto parcial:");
                         notas.nota4 = Convert.ToSingle(Console.ReadLine());
                         break;
@@ -175,12 +175,12 @@ namespace EstructurasDatos
                 Console.WriteLine("Promedio de notas por parcial de todas sus clases:");
                 Console.WriteLine("==================================");
                 Console.WriteLine("Notas asignatura 1");
-                Console.Write("\tNota 1: "+nota1);
-                Console.WriteLine("\tNota 2: "+nota2);
-                Console.Write("\tNota 3: "+nota3);
-                Console.WriteLine("\tNota 4: "+nota4);
-                Console.Write("\tPromedio: "+promedio);
-                Console.WriteLine("\tAprobado: "+aprobado);
+                Console.Write("\tNota 1: " + nota1);
+                Console.WriteLine("\tNota 2: " + nota2);
+                Console.Write("\tNota 3: " + nota3);
+                Console.WriteLine("\tNota 4: " + nota4);
+                Console.Write("\tPromedio: " + promedio);
+                Console.WriteLine("\tAprobado: " + aprobado);
                 Console.WriteLine("==================================");
                 Console.WriteLine("Notas asignatura 2");
                 Console.Write("\tNota 1: " + nota1);
@@ -309,7 +309,7 @@ namespace EstructurasDatos
         public void CalcularPromedio()
         {
             promedio = (nota1 + nota2 + nota3 + nota4) / 4;
-            if (promedio >= 65 && promedio<=100) aprobado = true;
+            if (promedio >= 65 && promedio <= 100) aprobado = true;
         }
     }
 }
