@@ -8,14 +8,14 @@ namespace Aplicacion.Models
 {
     internal class Nota
     {
-        public int id_estudiante { get; set; }
-        public int id_asignatura { get; set; }
-        public float nota1 { get; set; }
-        public float nota2 { get; set; }
-        public float nota3 { get; set; }
-        public float nota4 { get; set; }
-        public float promedio { get; set; }
-        public bool aprobado { get; set; }
+        public int idEestudiante { get; set; }
+        public int idAasignatura { get; set; }
+        public float? nota1 { get; set; }
+        public float? nota2 { get; set; }
+        public float? nota3 { get; set; }
+        public float? nota4 { get; set; }
+        public float? promedio { get; set; }
+        public bool? aprobado { get; set; }
 
         public static Nota notas = new Nota();
         public static void GestionNota()

@@ -22,7 +22,6 @@ namespace Aplicacion.Models
         public string correo { get; set;}
         public string tipoSangre { get; set;}
         public string tutor { get; set;}
-        public string motivo { get; set;}
 
         public static Estudiante estudiante1 = new Estudiante();
 
