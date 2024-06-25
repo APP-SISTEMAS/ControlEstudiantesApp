@@ -6,10 +6,17 @@ using System.Threading.Tasks;
 
 namespace Aplicacion.Models
 {
-    internal class LogEstudiante
+    public class LogEstudiante
     {
-        public int idEstudiante { get; set; }
-        public bool estado { get; set; }
-        public string motivo { get; set; }
+        public int IdEstudiante { get; set; }
+        public bool Estado { get; set; }
+        public string Motivo { get; set; }
+
+        public LogEstudiante(int idEstudiante, bool estado, string motivo)
+        {
+            IdEstudiante = idEstudiante;
+            Estado = estado;
+            Motivo = motivo;
+        }
     }
 }

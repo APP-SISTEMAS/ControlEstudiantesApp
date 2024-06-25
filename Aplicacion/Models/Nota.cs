@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Aplicacion.Models
 {
-    internal class Nota
+    public class Nota
     {
         public int idEestudiante { get; set; }
         public int idAasignatura { get; set; }

@@ -22,10 +22,10 @@ namespace EstructurasDatos
                 Console.WriteLine("0)Salir");
                 Console.WriteLine("Seleccione una opcion:");
                 int numeroOpcion = Convert.ToInt32(Console.ReadLine());
-                switch (numeroOpcion)
+                /*switch (numeroOpcion)
                 {
                     case 1:
-                        Estudiante.GestionEstudiante();
+                       // GestionEstudiante.MenuEstudiante();
                         break;
                     case 2:
                         Asignatura.GestionAsignatura();
@@ -45,7 +45,7 @@ namespace EstructurasDatos
                     default:
                         Console.WriteLine("Opcion no valida");
                         break;
-                }
+                }*/
             } while (continuar);
             Console.ResetColor();
         }
