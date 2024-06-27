@@ -1,18 +1,11 @@
 ﻿using Aplicacion.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Aplicacion.Estudiantes
+namespace Aplicacion.Gestores
 {
     public class GestionHabilitacionEstudiante
     {
-        public GestionHabilitacionEstudiante(int id,bool estado, string motivo)
-        {
-        }
-        public Boolean Deshabilitar(Estudiante estudiante, string motivo)
+        public bool Deshabilitar(Estudiante estudiante, string motivo)
         {/*
             Console.Clear();
             Console.WriteLine("Deshabilitar Estudiante");
@@ -29,7 +22,7 @@ namespace Aplicacion.Estudiantes
             Console.ReadKey();*/
             return true;
         }
-        public Boolean Habilitar(Estudiante estudiante, string motivo)
+        public bool Habilitar(Estudiante estudiante, string motivo)
         {/*
             Console.Clear();
             Console.WriteLine("Habilitar Estudiante");

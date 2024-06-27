@@ -1,20 +1,15 @@
-﻿using Aplicacion.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Aplicacion.Estudiantes
+namespace Aplicacion.Interfaz
 {
-    public class GestionAsignaturas
+    public class PantallaGestionAsignaturas
     {
-        public GestionAsignaturas(int id, string asignatura, bool activo)
-        {
-        }
-        public static void Menu()
-        { /*
+        public static void MenuAsignatura()
+        { 
         bool continuar = true;
             do
             {
@@ -36,7 +31,7 @@ namespace Aplicacion.Estudiantes
                         Console.WriteLine("Agregar Asignatura");
                         Console.WriteLine("==================");
 
-                        Console.ForegroundColor = ConsoleColor.Green;
+                        /*Console.ForegroundColor = ConsoleColor.Green;
                         Console.WriteLine("Ingrese el nombre de la Asignatura:");
                         asignatura1.asignatura = Console.ReadLine();
                         asignatura1.activo = true;
@@ -94,7 +89,7 @@ namespace Aplicacion.Estudiantes
                             Console.WriteLine("Asignatura no encontrada");
                         }
                         Console.ResetColor();
-                        Console.ReadKey();
+                        Console.ReadKey();*/
                         break;
                     case 0:
                         continuar = false;
@@ -103,34 +98,7 @@ namespace Aplicacion.Estudiantes
                         Console.WriteLine("Opcion no valida");
                         break;
                 }
-            } while (continuar);*/
-        }
-        public Boolean Agregar(Asignatura asignatura)
-        {
-            return true;
-        }
-        public Boolean Modificar(Asignatura asignatura)
-        {
-            return true;
-        }
-        public Boolean Eliminar(Asignatura asignatura)
-        {
-            return false;
-        }
-        public List<Asignatura> ListarAsignaturas()
-        {/*
-            Console.WriteLine("Listado de Asignaturas");
-            Console.ForegroundColor = ConsoleColor.DarkYellow;
-            for (int i = 0; i < 3; i++)
-            {
-                Console.WriteLine("======================");
-                Console.WriteLine("Id: " + asignatura1.id);
-                Console.WriteLine("Asignatura: " + asignatura1.asignatura);
-                Console.WriteLine("Estado: " + asignatura1.activo);
-            }
-            Console.ResetColor();
-        */
-        return new List<Asignatura>();
+            } while (continuar);
         }
     }
 }

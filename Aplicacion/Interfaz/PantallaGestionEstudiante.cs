@@ -1,43 +1,43 @@
-﻿using Aplicacion.Models;
+﻿using Aplicacion.Gestores;
 using System;
 
-namespace EstructurasDatos
+namespace Aplicacion.Interfaz
 {
-    class Program
+    public class PantallaGestionEstudiante
     {
-        static void Main()
+
+        public static void MenuEstudiante()
         {
             bool continuar = true;
             do
             {
                 Console.Clear();
                 Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.WriteLine("Aplicacion Control de Centro Educativo");
-                Console.WriteLine("==================================");
-                Console.WriteLine("1)Gestion de Estudiante");
-                Console.WriteLine("2)Gestion de Asignaturas");
-                Console.WriteLine("3)Gestion de Notas y Reportes finales");
-                Console.WriteLine("4)Gestion de Departamentos");
-                Console.WriteLine("5)Gestion de Municipios");
+                Console.WriteLine("Gestion de Estudiante");
+                Console.WriteLine("1)Registrar");
+                Console.WriteLine("2)Actualizar");
+                Console.WriteLine("3)Deshabilitar");
+                Console.WriteLine("4)Habilitar");
+                Console.WriteLine("5)Mostrar Informacion Estudiante");
                 Console.WriteLine("0)Salir");
                 Console.WriteLine("Seleccione una opcion:");
                 int numeroOpcion = Convert.ToInt32(Console.ReadLine());
-                /*switch (numeroOpcion)
+                switch (numeroOpcion)
                 {
                     case 1:
-                       // GestionEstudiante.MenuEstudiante();
+                        //GestionEstudiante.Registrar(estudiante);
                         break;
                     case 2:
-                        Asignatura.GestionAsignatura();
+                        //estudiante1.Actualizar();
                         break;
                     case 3:
-                        Nota.GestionNota();
+                        //estudiante1.Deshabilitar();
                         break;
                     case 4:
-                        Departamento.GestionDepartamento();
+                        //estudiante1.Habilitar();
                         break;
                     case 5:
-                        Municipio.GestionMunicipio();
+                        //estudiante1.MostrarInformacion();
                         break;
                     case 0:
                         continuar = false;
@@ -45,9 +45,9 @@ namespace EstructurasDatos
                     default:
                         Console.WriteLine("Opcion no valida");
                         break;
-                }*/
+                }
+                Console.ResetColor();
             } while (continuar);
-            Console.ResetColor();
         }
     }
 }

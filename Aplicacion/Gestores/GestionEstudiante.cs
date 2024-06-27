@@ -1,70 +1,18 @@
 ﻿using Aplicacion.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Aplicacion.Estudiantes
+namespace Aplicacion.Gestores
 {
-    public class GestionEstudiante : Estudiante 
+    public class GestionEstudiante
     {
-        public GestionEstudiante(int id, string nombre,
-            string apellido, DateTime? fechaNacimiento,
-            string identificacion, char genero,
-            bool ativo, string telefono, string departamento,
-            string municipio, string direccion,
-            string correo, string tipoSangre, string tutor)
-            : base(id, nombre, apellido, fechaNacimiento, identificacion, genero, ativo, telefono, departamento, municipio, direccion, correo, tipoSangre, tutor)
-        {
-        }
 
-        public static void MenuEstudiante(Estudiante estudiante)
-        {
-            /*bool continuar = true;
-            do
-            {
-                Console.Clear();
-                Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.WriteLine("Gestion de Estudiante");
-                Console.WriteLine("1)Registrar");
-                Console.WriteLine("2)Actualizar");
-                Console.WriteLine("3)Deshabilitar");
-                Console.WriteLine("4)Habilitar");
-                Console.WriteLine("5)Mostrar Informacion Estudiante");
-                Console.WriteLine("0)Salir");
-                Console.WriteLine("Seleccione una opcion:");
-                int numeroOpcion = Convert.ToInt32(Console.ReadLine());
-                switch (numeroOpcion)
-                {
-                    case 1:
-                        //estudiante.Registrar();
-                        break;
-                    case 2:
-                        //estudiante1.Actualizar();
-                        break;
-                    case 3:
-                        //estudiante1.Deshabilitar();
-                        break;
-                    case 4:
-                        //estudiante1.Habilitar();
-                        break;
-                    case 5:
-                        //estudiante1.MostrarInformacion();
-                        break;
-                    case 0:
-                        continuar = false;
-                        break;
-                    default:
-                        Console.WriteLine("Opcion no valida");
-                        break;
-                }
-                Console.ResetColor();
-            } while (continuar);*/
-        }
         public string Validar(Estudiante estudiante)
         {
             return "";
+        }
+        public bool ValidarIdentificacion(Estudiante estudiante)
+        {
+            return true;
         }
         public List<Departamento> ObtenerListaDepartamentos()
         {
@@ -78,7 +26,7 @@ namespace Aplicacion.Estudiantes
         {
             return new List<TipoSangre>();
         }
-        public Boolean Registrar(Estudiante estudiante)
+        public bool Registrar(Estudiante estudiante)
         {/*
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.Green;
@@ -112,7 +60,7 @@ namespace Aplicacion.Estudiantes
             Console.ResetColor();*/
             return true;
         }
-        public Boolean Actualizar(Estudiante estudiante, int id)
+        public bool Actualizar(Estudiante estudiante, int id)
         {/*
             Console.Clear();
             bool continuar = true;
