@@ -1,5 +1,4 @@
-﻿using System;
-namespace Aplicacion.Modelos
+﻿namespace Aplicacion.Modelos
 {
     public  class Departamento
     {

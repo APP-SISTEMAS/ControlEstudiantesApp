@@ -1,14 +1,20 @@
 ﻿using Aplicacion.Modelos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using AplicacionWinform.Config;
+using System.Data;
+
 
 namespace AplicacionWinform.Estudiantes
 {
     public class GestionEstudiante
     {
+
+        private Database _db;
+
+        public GestionEstudiante()
+        {
+            _db = new Database();    
+        }
+
         public string  Validar(Estudiante estudiante) {
 
             return "";
@@ -21,12 +27,30 @@ namespace AplicacionWinform.Estudiantes
 
         public List<Municipio> ObtenerListaMunicipios()
         {
-            return new List<Municipio>();
+            DataTable data = new DataTable();
+            this._db.DbContext.Open();
+            var command = this._db.DbContext.CreateCommand();
+            command.CommandText = "Select Id, IdDepartamento, Nombre from Municipios";
+            data.Load(command.ExecuteReader());
+
+            List<Municipio> lstMunicipios = new List<Municipio>();
+
+            foreach (DataRow fila in data.Rows)
+            {
+                lstMunicipios.Add(new Municipio {
+                    Id = (int)fila["Id"], 
+                    IdDepartamento = (int)fila["IdDepartamento"],  
+                    Nombre= fila["Nombre"].ToString()
+                    }
+                );
+            }
+            this._db.DbContext.Close();
+            return lstMunicipios;
         }
 
         public Boolean Guardar(Estudiante estudiante)
         {
-
+           
 
             return true;
         }
