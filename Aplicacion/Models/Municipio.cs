@@ -1,11 +1,12 @@
 ﻿namespace Aplicacion.Models
 {
-    public class Municipio
+    public class Municipio: Departamento
     {
         public int Id { get; set; }
         public int DepartamentoCodigo { get; set; }
         public string MunicipioNombre { get; set; }
 
+        public string DepartamentoNombre { get; set; }
     }
 }
 //public static Municipio municipio1 = new Municipio();

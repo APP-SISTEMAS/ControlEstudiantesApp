@@ -5,9 +5,11 @@ namespace Aplicacion.Interfaz
 {
     public class PantallaGestionEstudiante
     {
+        
 
         public static void MenuEstudiante()
         {
+            GestionEstudiante gestionEstudiante = new GestionEstudiante();
             bool continuar = true;
             do
             {
@@ -25,7 +27,8 @@ namespace Aplicacion.Interfaz
                 switch (numeroOpcion)
                 {
                     case 1:
-                        //GestionEstudiante.Registrar(estudiante);
+                        gestionEstudiante.ObtenerListaMunicipios();
+                        Console.ReadKey();
                         break;
                     case 2:
                         //estudiante1.Actualizar();

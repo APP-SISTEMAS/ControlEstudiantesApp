@@ -1,5 +1,5 @@
 ﻿using System;
-
+using Aplicacion.Config;
 namespace Aplicacion.Interfaz
 {
     class Program
