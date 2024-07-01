@@ -15,9 +15,19 @@ namespace AplicacionWinform.Estudiantes
             _db = new Database();    
         }
 
-        public string  Validar(Estudiante estudiante) {
+        public string Validar(Estudiante estudiante) {
 
-            return "";
+            var msjValidacion = "";
+
+            if (string.IsNullOrWhiteSpace(estudiante.Nombre))
+                msjValidacion += "El nombre no puede estar vacio o nullo \n";
+
+
+            if (string.IsNullOrWhiteSpace(estudiante.Identidad))
+                msjValidacion += "La identidad no puede estar vacia o nullo  \n";
+
+
+            return msjValidacion;
         }
 
         public List<Departamento> ObtenerListaDepartamentos() {
@@ -50,17 +60,26 @@ namespace AplicacionWinform.Estudiantes
 
         public bool Guardar(Estudiante estudiante)
         {
-            this._db.DbContext.Open();
-            var command = this._db.DbContext.CreateCommand();
-            command.CommandText = $@"
-                INSERT INTO Estudiantes (Nombre, Identidad, FechaNacimiento, Activo)
-                Values ( @Nombre, @Identidad, @FechaNacimiento, 1) ";
-            command.Parameters.AddWithValue("@Nombre", estudiante.Nombre);
-            command.Parameters.AddWithValue("@Identidad", estudiante.Identidad );
-            command.Parameters.AddWithValue("@FechaNacimiento", estudiante.FechaNacimiento.ToString("dd/MM/yyyy"));
-            var rowsAfected = command.ExecuteNonQuery();
-            this._db.DbContext.Close();
-            return rowsAfected  > 0;
+            var result  = false;
+            try
+            {
+                this._db.DbContext.Open();
+                var command = this._db.DbContext.CreateCommand();
+                command.CommandText = $@"
+                    INSERT INTO Estudiantes (Nombre, Identidad, FechaNacimiento, Activo)
+                    Values ( @Nombre, @Identidad, @FechaNacimiento, 1) ";
+                command.Parameters.AddWithValue("@Nombre", estudiante.Nombre);
+                command.Parameters.AddWithValue("@Identidad", estudiante.Identidad );
+                command.Parameters.AddWithValue("@FechaNacimiento", estudiante.FechaNacimiento.ToString("dd/MM/yyyy"));
+                var rowsAfected = command.ExecuteNonQuery();
+                result = rowsAfected > 0;
+                this._db.DbContext.Close();
+            }
+            catch (Exception err)
+            {
+                throw new Exception("Ocurrio un error en la base de datos: "+err);
+            }
+            return result;
         }
 
         public bool Modificar(Estudiante estudiante, int id)
@@ -111,18 +130,25 @@ namespace AplicacionWinform.Estudiantes
             var command = this._db.DbContext.CreateCommand();
             command.CommandText = "Select Id, Nombre, Identidad, FechaNacimiento from Estudiantes Where Activo = 1  ";
             data.Load(command.ExecuteReader());
-            List<Estudiante> lstEstudiantes = new List<Estudiante>();
+            var lstEstudiantes = new List<Estudiante>();
 
             foreach (DataRow fila in data.Rows)
             {
-                lstEstudiantes.Add(new Estudiante
-                {
-                    Id = (int)fila["Id"],
-                    Nombre = fila["Nombre"].ToString(),
-                    Identidad= fila["Identidad"].ToString(),
-                    FechaNacimiento= (DateTime)fila["FechaNacimiento"],
-                }
-                );
+                var nuevoEstudiante = new Estudiante();
+                nuevoEstudiante.Id = (int)fila["Id"];
+                nuevoEstudiante.Nombre = fila["Nombre"].ToString();
+                nuevoEstudiante.Identidad = fila["Identidad"].ToString();
+                nuevoEstudiante.FechaNacimiento = (DateTime)fila["FechaNacimiento"];
+                lstEstudiantes.Add(nuevoEstudiante);
+
+                //lstEstudiantes.Add(new Estudiante
+                //    {
+                //        Id = (int)fila["Id"],
+                //        Nombre = fila["Nombre"].ToString(),
+                //        Identidad = fila["Identidad"].ToString(),
+                //        FechaNacimiento = (DateTime)fila["FechaNacimiento"],
+                //    }
+                //);
             }
             this._db.DbContext.Close();
             return lstEstudiantes;
@@ -145,7 +171,6 @@ namespace AplicacionWinform.Estudiantes
                 estudiante.Identidad = fila["Identidad"].ToString();
                 estudiante.FechaNacimiento = (DateTime)fila["FechaNacimiento"];
             }
-
             this._db.DbContext.Close();
             return estudiante;
         }

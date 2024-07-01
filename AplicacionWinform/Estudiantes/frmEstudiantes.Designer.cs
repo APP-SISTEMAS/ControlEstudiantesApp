@@ -40,6 +40,14 @@
             button2 = new Button();
             button3 = new Button();
             button4 = new Button();
+            dataGridView1 = new DataGridView();
+            colId = new DataGridViewTextBoxColumn();
+            ColNombre = new DataGridViewTextBoxColumn();
+            ColIdentidad = new DataGridViewTextBoxColumn();
+            colFechaNacimiento = new DataGridViewTextBoxColumn();
+            colEstado = new DataGridViewTextBoxColumn();
+            button5 = new Button();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
             // label1
@@ -60,9 +68,9 @@
             // 
             // button1
             // 
-            button1.Location = new Point(137, 223);
+            button1.Location = new Point(468, 39);
             button1.Name = "button1";
-            button1.Size = new Size(75, 23);
+            button1.Size = new Size(96, 23);
             button1.TabIndex = 2;
             button1.Text = "Guardar";
             button1.UseVisualStyleBackColor = true;
@@ -119,16 +127,16 @@
             // 
             // button2
             // 
-            button2.Location = new Point(218, 223);
+            button2.Location = new Point(468, 81);
             button2.Name = "button2";
-            button2.Size = new Size(75, 23);
+            button2.Size = new Size(96, 23);
             button2.TabIndex = 9;
             button2.Text = "Cancelar";
             button2.UseVisualStyleBackColor = true;
             // 
             // button3
             // 
-            button3.Location = new Point(314, 223);
+            button3.Location = new Point(468, 124);
             button3.Name = "button3";
             button3.Size = new Size(96, 23);
             button3.TabIndex = 10;
@@ -137,7 +145,7 @@
             // 
             // button4
             // 
-            button4.Location = new Point(216, 44);
+            button4.Location = new Point(216, 47);
             button4.Name = "button4";
             button4.Size = new Size(53, 23);
             button4.TabIndex = 11;
@@ -145,11 +153,59 @@
             button4.UseVisualStyleBackColor = true;
             button4.Click += button4_Click;
             // 
+            // dataGridView1
+            // 
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { colId, ColNombre, ColIdentidad, colFechaNacimiento, colEstado });
+            dataGridView1.Location = new Point(54, 249);
+            dataGridView1.Name = "dataGridView1";
+            dataGridView1.Size = new Size(574, 223);
+            dataGridView1.TabIndex = 12;
+            // 
+            // colId
+            // 
+            colId.HeaderText = "Id";
+            colId.Name = "colId";
+            // 
+            // ColNombre
+            // 
+            ColNombre.FillWeight = 200F;
+            ColNombre.HeaderText = "Nombre";
+            ColNombre.Name = "ColNombre";
+            // 
+            // ColIdentidad
+            // 
+            ColIdentidad.FillWeight = 150F;
+            ColIdentidad.HeaderText = "Identidad";
+            ColIdentidad.Name = "ColIdentidad";
+            // 
+            // colFechaNacimiento
+            // 
+            colFechaNacimiento.HeaderText = "Fecha Nacimiento";
+            colFechaNacimiento.Name = "colFechaNacimiento";
+            // 
+            // colEstado
+            // 
+            colEstado.HeaderText = "Estado";
+            colEstado.Name = "colEstado";
+            // 
+            // button5
+            // 
+            button5.Location = new Point(315, 21);
+            button5.Name = "button5";
+            button5.Size = new Size(96, 23);
+            button5.TabIndex = 13;
+            button5.Text = "Listas";
+            button5.UseVisualStyleBackColor = true;
+            button5.Click += button5_Click;
+            // 
             // frmEstudiantes
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(530, 361);
+            ClientSize = new Size(657, 484);
+            Controls.Add(button5);
+            Controls.Add(dataGridView1);
             Controls.Add(button4);
             Controls.Add(button3);
             Controls.Add(button2);
@@ -165,6 +221,7 @@
             Name = "frmEstudiantes";
             Text = "frmEstudiantes";
             Load += frmEstudiantes_Load;
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -183,5 +240,12 @@
         private Button button2;
         private Button button3;
         private Button button4;
+        private DataGridView dataGridView1;
+        private DataGridViewTextBoxColumn colId;
+        private DataGridViewTextBoxColumn ColNombre;
+        private DataGridViewTextBoxColumn ColIdentidad;
+        private DataGridViewTextBoxColumn colFechaNacimiento;
+        private DataGridViewTextBoxColumn colEstado;
+        private Button button5;
     }
 }
