@@ -18,29 +18,32 @@ namespace Aplicacion.Interfaz
                 Console.WriteLine("Gestion de Estudiante");
                 Console.WriteLine("1)Registrar");
                 Console.WriteLine("2)Actualizar");
-                Console.WriteLine("3)Deshabilitar");
-                Console.WriteLine("4)Habilitar");
-                Console.WriteLine("5)Mostrar Informacion Estudiante");
+                Console.WriteLine("3)Gestion Habilitacion-Deshabilitacion");
+                Console.WriteLine("4)Mostrar Informacion Estudiante");
                 Console.WriteLine("0)Salir");
                 Console.WriteLine("Seleccione una opcion:");
                 int numeroOpcion = Convert.ToInt32(Console.ReadLine());
                 switch (numeroOpcion)
                 {
                     case 1:
-                        gestionEstudiante.ObtenerListaMunicipios();
+                        //gestionEstudiante.Registrar();
                         Console.ReadKey();
                         break;
                     case 2:
-                        //estudiante1.Actualizar();
+                        //gestionEstudiante.Actualizar();
+                        Console.ReadKey();
                         break;
                     case 3:
-                        //estudiante1.Deshabilitar();
+                        PantallaGestionHabilitacionEstudiante.MenuHabilitacionEstudiante();
                         break;
                     case 4:
-                        //estudiante1.Habilitar();
-                        break;
-                    case 5:
-                        //estudiante1.MostrarInformacion();
+                        Console.WriteLine("Seleccione el estudiante del que desea ver la información:");
+                        Console.WriteLine("Nota: Seleccione el ID");
+                        gestionEstudiante.ObtenerListaEstudiantes();
+                        int idEstudiante = Convert.ToInt32(Console.ReadLine());
+                        gestionEstudiante.ObtenerInformacionEstudiante(idEstudiante);
+                        gestionEstudiante.ObtenerListaTipoSangre();
+                        Console.ReadKey();
                         break;
                     case 0:
                         continuar = false;

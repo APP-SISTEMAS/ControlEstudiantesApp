@@ -17,7 +17,7 @@ namespace Aplicacion.Config
             Context.ConnectionString = $"Server={this._server};Database={this._database};User Id={this._user};Password={this._password};Connection Timeout=10;; TrustServerCertificate=True;";
             //Context.ConnectionString = $"Server={this._server};Database={this._database};Integrate Security=True;TrustServerCertificate=True;";
             //Context.ConnectionString = $"Server={this._server};Database={this._database};TrustServerCertificate=True;";
-            Context.Open();
+            //Context.Open();
         }
     }
 }

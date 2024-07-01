@@ -1,11 +1,13 @@
-﻿using System;
-using Aplicacion.Config;
+﻿using Aplicacion.Gestores;
+using System;
 namespace Aplicacion.Interfaz
 {
     class Program
     {
         static void Main()
         {
+            Console.Title = "Control de Centro Educativo";
+            GestionEstudiante gestionEstudiante = new GestionEstudiante();
             bool continuar = true;
             do
             {
@@ -24,20 +26,27 @@ namespace Aplicacion.Interfaz
                 switch (numeroOpcion)
                 {
                     case 1:
+                        Console.Clear();
                         PantallaGestionEstudiante.MenuEstudiante();
                         break;
                     case 2:
+                        Console.Clear();
                         PantallaGestionAsignaturas.MenuAsignatura();
                         break;
-                    /*case 3:
-                        Nota.GestionNota();
+                    case 3:
+                        Console.Clear();
+                        PantallaGestionNotas.MenuNota();
                         break;
                     case 4:
-                        Departamento.GestionDepartamento();
+                        Console.Clear();
+                        gestionEstudiante.ObtenerListaMunicipios();
+                        Console.ReadKey();
                         break;
                     case 5:
-                        Municipio.GestionMunicipio();
-                        break;*/
+                        Console.Clear();
+                        gestionEstudiante.ObtenerListaDepartamentos();
+                        Console.ReadKey();
+                        break;
                     case 0:
                         continuar = false;
                         break;

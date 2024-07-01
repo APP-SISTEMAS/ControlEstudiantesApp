@@ -18,5 +18,6 @@ namespace Aplicacion.Models
         public string? Correo { get; set; }
         public string TipoSangre { get; set; }
         public string Tutor { get; set; }
+        public string? Motivo { get; set; }
     }
 }
