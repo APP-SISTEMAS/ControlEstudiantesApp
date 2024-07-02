@@ -17,6 +17,10 @@ namespace Aplicacion.Gestores
         {
             return false;
         }
+        public bool VerificarExistencia(Asignatura asignatura)
+        {
+            return true;
+        }
         public List<Asignatura> ListarAsignaturas()
         {
             return new List<Asignatura>();

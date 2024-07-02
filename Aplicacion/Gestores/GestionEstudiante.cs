@@ -14,9 +14,64 @@ namespace Aplicacion.Gestores
             _database = new Database();
         }
 
-        public string Validar(Estudiante estudiante)
+        public string ValidarEstudiante(Estudiante estudiante)
         {
-            return "";
+            var mensajeValidacion = "";
+            if (string.IsNullOrEmpty(estudiante.Nombre))
+            {
+                mensajeValidacion += "El campo nombre es requerido\n";
+            }
+            if (string.IsNullOrEmpty(estudiante.Apellido))
+            {
+                mensajeValidacion += "El campo apellido es requerido\n";
+            }
+            if (estudiante.FechaNacimiento == null)
+            {
+                mensajeValidacion += "El campo fecha de nacimiento es requerido\n";
+            }
+            if (string.IsNullOrEmpty(estudiante.Identificacion))
+            {
+                mensajeValidacion += "El campo identificacion es requerido\n";
+            }
+            //Mejorar este if
+            if((estudiante.Identificacion).Length != 13)
+            {
+                mensajeValidacion += "El campo identificacion debe tener 13 digitos\n";
+            }
+            if (string.IsNullOrEmpty(estudiante.Genero.ToString()))
+            {
+                mensajeValidacion += "El campo genero es requerido\n";
+            }
+            if (string.IsNullOrEmpty(estudiante.Telefono))
+            {
+                mensajeValidacion += "El campo telefono es requerido\n";
+            }
+            if (string.IsNullOrEmpty(estudiante.Departamento))
+            {
+                mensajeValidacion += "El campo departamento es requerido\n";
+            }
+            if (string.IsNullOrEmpty(estudiante.Municipio))
+            {
+                mensajeValidacion += "El campo municipio es requerido\n";
+            }
+            if (string.IsNullOrEmpty(estudiante.Direccion))
+            {
+                mensajeValidacion += "El campo direccion es requerido\n";
+            }
+            if (string.IsNullOrEmpty(estudiante.Correo))
+            {
+                mensajeValidacion += "El campo correo es requerido\n";
+            }
+            if (string.IsNullOrEmpty(estudiante.TipoSangre))
+            {
+                mensajeValidacion += "El campo tipo de sangre es requerido\n";
+            }
+            if (string.IsNullOrEmpty(estudiante.Tutor))
+            {
+                mensajeValidacion += "El campo tutor es requerido\n";
+            }
+
+            return mensajeValidacion;
         }
         public Boolean ValidarIdentificacion(Estudiante estudiante)
         {
@@ -141,7 +196,38 @@ namespace Aplicacion.Gestores
 
         public Boolean Registrar(Estudiante estudiante)
         {
-            return true;
+            var result = false;
+            try
+            {
+                if (_database.Context.State != ConnectionState.Open)
+                {
+                    _database.Context.Open();
+                }
+                var command = _database.Context.CreateCommand();
+                command.CommandText = "INSERT INTO Estudiante (nombre, apellido, fecha_nacimiento, identidad, genero, activo, telefono, id_departamento, id_municipio, direccion, correo, id_tipo_sangre, tutor) " +
+                    "VALUES (@nombre, @apellido, @fecha_nacimiento, @identidad, @genero, @activo, @telefono, @id_departamento, @id_municipio, @direccion, @correo, @id_tipo_sangre, @tutor)";
+                command.Parameters.AddWithValue("@nombre", estudiante.Nombre);
+                command.Parameters.AddWithValue("@apellido", estudiante.Apellido);
+                command.Parameters.AddWithValue("@fecha_nacimiento", estudiante.FechaNacimiento);
+                command.Parameters.AddWithValue("@identidad", estudiante.Identificacion);
+                command.Parameters.AddWithValue("@genero", estudiante.Genero);
+                command.Parameters.AddWithValue("@activo", estudiante.Activo);
+                command.Parameters.AddWithValue("@telefono", estudiante.Telefono);
+                command.Parameters.AddWithValue("@id_departamento", estudiante.Departamento);
+                command.Parameters.AddWithValue("@id_municipio", estudiante.Municipio);
+                command.Parameters.AddWithValue("@direccion", estudiante.Direccion);
+                command.Parameters.AddWithValue("@correo", estudiante.Correo);
+                command.Parameters.AddWithValue("@id_tipo_sangre", estudiante.TipoSangre);
+                command.Parameters.AddWithValue("@tutor", estudiante.Tutor);
+                command.ExecuteNonQuery();
+                result = true;
+                _database.Context.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error: " + ex);
+            }
+            return result;
         }
         public Boolean Actualizar(Estudiante estudiante, int id)
         {
@@ -242,5 +328,3 @@ namespace Aplicacion.Gestores
         }
     }
 }
-
-//.ToString("dd/mm/yyyy")

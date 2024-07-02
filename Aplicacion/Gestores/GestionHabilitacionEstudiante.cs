@@ -184,7 +184,6 @@ namespace Aplicacion.Gestores
             {
                 Console.WriteLine(string.Format("{0,-5} | {1,-10} | {2,-10} | {3,-25} |", estudiante.Id, estudiante.Nombre, estudiante.Apellido, estudiante.Motivo));
             }
-
             Console.WriteLine("------------------------------------------------------------\n");
 
 

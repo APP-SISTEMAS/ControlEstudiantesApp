@@ -44,7 +44,7 @@ namespace Aplicacion.Interfaz
                         idEstudiante = Convert.ToInt32(Console.ReadLine());
                         Console.WriteLine("Ingrese el motivo de la deshabilitacion:");
                         motivo = Console.ReadLine();
-                        gestionHabilitacionEstudiante.Deshabilitar(motivo,idEstudiante);
+                        gestionHabilitacionEstudiante.Deshabilitar(motivo, idEstudiante);
                         Console.WriteLine("Estudiante deshabilitado correctamente");
                         Console.ReadKey();
                         break;
