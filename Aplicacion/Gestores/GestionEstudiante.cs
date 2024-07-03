@@ -3,6 +3,7 @@ using Aplicacion.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Text.RegularExpressions;
 
 namespace Aplicacion.Gestores
 {
@@ -13,7 +14,6 @@ namespace Aplicacion.Gestores
         {
             _database = new Database();
         }
-
         public string ValidarEstudiante(Estudiante estudiante)
         {
             var mensajeValidacion = "";
@@ -33,18 +33,13 @@ namespace Aplicacion.Gestores
             {
                 mensajeValidacion += "El campo identificacion es requerido\n";
             }
-            //Mejorar este if
-            if((estudiante.Identificacion).Length != 13)
+            if (!Regex.IsMatch(estudiante.Identificacion, @"^\d{4}-\d{4}-\d{5}$"))
             {
-                mensajeValidacion += "El campo identificacion debe tener 13 digitos\n";
+                mensajeValidacion += "El campo identificación debe tener el formato xxxx-xxxx-xxxxx\n";
             }
             if (string.IsNullOrEmpty(estudiante.Genero.ToString()))
             {
                 mensajeValidacion += "El campo genero es requerido\n";
-            }
-            if (string.IsNullOrEmpty(estudiante.Telefono))
-            {
-                mensajeValidacion += "El campo telefono es requerido\n";
             }
             if (string.IsNullOrEmpty(estudiante.Departamento))
             {
@@ -58,10 +53,6 @@ namespace Aplicacion.Gestores
             {
                 mensajeValidacion += "El campo direccion es requerido\n";
             }
-            if (string.IsNullOrEmpty(estudiante.Correo))
-            {
-                mensajeValidacion += "El campo correo es requerido\n";
-            }
             if (string.IsNullOrEmpty(estudiante.TipoSangre))
             {
                 mensajeValidacion += "El campo tipo de sangre es requerido\n";
@@ -73,13 +64,22 @@ namespace Aplicacion.Gestores
 
             return mensajeValidacion;
         }
-        public Boolean ValidarIdentificacion(Estudiante estudiante)
-        {
-            return true;
+        public Boolean ValidarIdentificacion(string identidad)
+        {            
+            if (_database.Context.State != ConnectionState.Open)
+            {
+                _database.Context.Open();
+            }
+            var command = _database.Context.CreateCommand();
+            command.CommandText = "SELECT COUNT(*) FROM Estudiante WHERE identidad = @identidad";
+            command.Parameters.AddWithValue("@identidad", identidad);
+            int count = (int)command.ExecuteScalar();
+            _database.Context.Close();
+            return count == 0;
         }
         public List<Departamento> ObtenerListaDepartamentos()
         {
-            Console.ForegroundColor = ConsoleColor.Green;
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
             DataTable data = new DataTable();
             if (this._database.Context.State != ConnectionState.Open)
             {
@@ -108,24 +108,24 @@ namespace Aplicacion.Gestores
             {
                 Console.WriteLine(string.Format("{0,-5} | {1,-20} |", departamento.Id, departamento.DepartamentoNombre));
             }
-            Console.WriteLine("------------------------------\n");
+            Console.WriteLine("------------------------------");
 
             this._database.Context.Close();
             Console.ResetColor();
             return departamentos;
         }
-
-        public List<Municipio> ObtenerListaMunicipios()
+        public List<Municipio> ObtenerListaMunicipios(string idDepartamento)
         {
-            Console.ForegroundColor = ConsoleColor.Green;
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
             DataTable data = new DataTable();
             if (this._database.Context.State != ConnectionState.Open)
             {
                 this._database.Context.Open();
             }
             var command = this._database.Context.CreateCommand();
-            command.CommandText = "SELECT Municipio.id, Municipio.municipio, Municipio.id_departamento, Departamento.nombre AS departamento_nombre " +
-                "FROM Municipio INNER JOIN Departamento ON Municipio.id_departamento = Departamento.id";
+            command.CommandText = "SELECT m.id, m.municipio, d.nombre AS departamento_nombre " +
+                "FROM Municipio m JOIN Departamento d ON m.id_departamento = d.id WHERE m.id_departamento = @id";
+            command.Parameters.AddWithValue("@id", idDepartamento);
             data.Load(command.ExecuteReader());
             List<Municipio> municipios = new List<Municipio>();
 
@@ -135,30 +135,28 @@ namespace Aplicacion.Gestores
                 {
                     Id = (int)(fila["Id"]),
                     MunicipioNombre = fila["Municipio"].ToString(),
-                    DepartamentoCodigo = (int)(fila["id_departamento"]),
                     DepartamentoNombre = fila["departamento_nombre"].ToString()
                 });
             }
             // Imprimir la cabecera de la tabla
-            Console.Write("---------------------------------------------------------------");
-            Console.WriteLine(string.Format("\n{0,-5} | {1,-20} | {2,-8} | {3,-20}|", "Id", "Municipio", "Id_depto", "Departamento"));
-            Console.WriteLine("---------------------------------------------------------------");
+            Console.Write("----------------------------------------------------");
+            Console.WriteLine(string.Format("\n{0,-5} | {1,-20} | {2,-20}|", "Id", "Municipio", "Departamento"));
+            Console.WriteLine("----------------------------------------------------");
 
             // Imprimir los datos
             foreach (var municipio in municipios)
             {
-                Console.WriteLine(string.Format("{0,-5} | {1,-20} | {2,-8} | {3,-20}|", municipio.Id, municipio.MunicipioNombre, municipio.DepartamentoCodigo, municipio.DepartamentoNombre));
+                Console.WriteLine(string.Format("{0,-5} | {1,-20} | {2,-20}|", municipio.Id, municipio.MunicipioNombre,municipio.DepartamentoNombre));
             }
-            Console.WriteLine("---------------------------------------------------------------\n");
+            Console.WriteLine("----------------------------------------------------");
 
             this._database.Context.Close();
             Console.ResetColor();
             return municipios;
         }
-
         public List<TipoSangre> ObtenerListaTipoSangre()
         {
-            Console.ForegroundColor = ConsoleColor.Green;
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
             DataTable data = new DataTable();
             if (this._database.Context.State != ConnectionState.Open)
             {
@@ -187,13 +185,12 @@ namespace Aplicacion.Gestores
             {
                 Console.WriteLine(string.Format("{0,-5} | {1,-10} |", sangre.Id, sangre.SangreNombre));
             }
-            Console.WriteLine("--------------------\n");
+            Console.WriteLine("--------------------");
 
             this._database.Context.Close();
             Console.ResetColor();
             return tiposangre;
         }
-
         public Boolean Registrar(Estudiante estudiante)
         {
             var result = false;
@@ -268,8 +265,10 @@ namespace Aplicacion.Gestores
                 estudiante.TipoSangre = fila["tipo_sangre"].ToString();
                 estudiante.Tutor = fila["tutor"].ToString();
             }
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("Ficha Estudiantil");
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
+            Console.WriteLine("\tFicha Estudiantil");
+            Console.WriteLine("----------------------------------");
+            Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("Id: " + estudiante.Id);
             Console.WriteLine("Nombre: " + estudiante.Nombre);
             Console.WriteLine("Apellido: " + estudiante.Apellido);
@@ -290,14 +289,14 @@ namespace Aplicacion.Gestores
         }
         public List<Estudiante> ObtenerListaEstudiantes()
         {
-            Console.ForegroundColor = ConsoleColor.Green;
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
             DataTable data = new DataTable();
             if (_database.Context.State != ConnectionState.Open)
             {
                 _database.Context.Open();
             }
             var command = _database.Context.CreateCommand();
-            command.CommandText = "select id, Nombre,apellido from estudiante";
+            command.CommandText = "SELECT id, nombre, apellido, fecha_nacimiento, identidad FROM Estudiante";
             data.Load(command.ExecuteReader());
             List<Estudiante> estudiantes = new List<Estudiante>();
 
@@ -306,22 +305,23 @@ namespace Aplicacion.Gestores
                 estudiantes.Add(new Estudiante
                 {
                     Id = (int)(fila["id"]),
-                    Nombre = fila["Nombre"].ToString(),
-                    Apellido = fila["apellido"].ToString()
+                    Nombre = fila["nombre"].ToString(),
+                    Apellido = fila["apellido"].ToString(),
+                    FechaNacimiento = Convert.ToDateTime(fila["fecha_nacimiento"]),
+                    Identificacion = fila["identidad"].ToString()
                 });
             }
             // Imprimir la cabecera de la tabla
-            Console.Write("---------------------------------");
-            Console.WriteLine(string.Format("\n{0,-5} | {1,-10} | {2,-10} |", "Id", "Nombre", "Apellido"));
-            Console.WriteLine("---------------------------------");
+            Console.Write("--------------------------------------------------------------");
+            Console.WriteLine(string.Format("\n{0,-3} | {1,-10} | {2,-10} | {3,-10} | {4,-15} |", "Id", "Nombre", "Apellido", "Natalicio", "Identificacion"));
+            Console.WriteLine("--------------------------------------------------------------");
 
             // Imprimir los datos
             foreach (var estudiante in estudiantes)
             {
-                Console.WriteLine(string.Format("{0,-5} | {1,-10} | {2,-10} |", estudiante.Id, estudiante.Nombre, estudiante.Apellido));
+                Console.WriteLine(string.Format("{0,-3} | {1,-10} | {2,-10} | {3,-10} | {4,-15} |", estudiante.Id, estudiante.Nombre, estudiante.Apellido, estudiante.FechaNacimiento.ToString().Remove(10), estudiante.Identificacion));
             }
-            Console.WriteLine("---------------------------------\n");
-
+            Console.WriteLine("--------------------------------------------------------------");
             _database.Context.Close();
             Console.ResetColor();
             return estudiantes;

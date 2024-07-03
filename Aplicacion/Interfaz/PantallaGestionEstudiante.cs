@@ -38,7 +38,13 @@ namespace Aplicacion.Interfaz
                             Console.WriteLine("Ingrese la fecha de nacimiento del estudiante:");
                             estudiante.FechaNacimiento = Convert.ToDateTime(Console.ReadLine());
                             Console.WriteLine("Ingrese la identificacion del estudiante:");
-                            estudiante.Identificacion = Console.ReadLine();
+                            var result=gestionEstudiante.ValidarIdentificacion(Console.ReadLine());
+                            if(result==false){
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("Identificacion no valida, ya se encuentra registrada.");
+                                Console.ReadKey();
+                                break;
+                            }
                             Console.WriteLine("Ingrese el genero del estudiante:");
                             Console.WriteLine("M = Masculino, F = Femenino");
                             estudiante.Genero = Convert.ToChar(Console.ReadLine());
@@ -47,9 +53,11 @@ namespace Aplicacion.Interfaz
                             estudiante.Telefono = Console.ReadLine();
                             Console.WriteLine("Ingrese el departamento del estudiante:");
                             gestionEstudiante.ObtenerListaDepartamentos();
+                            Console.ForegroundColor = ConsoleColor.Green;
                             estudiante.Departamento = Console.ReadLine();
                             Console.WriteLine("Ingrese el municipio del estudiante:");
-                            gestionEstudiante.ObtenerListaMunicipios();
+                            gestionEstudiante.ObtenerListaMunicipios(estudiante.Departamento);
+                            Console.ForegroundColor = ConsoleColor.Green;
                             estudiante.Municipio = Console.ReadLine();
                             Console.WriteLine("Ingrese la direccion del estudiante:");
                             estudiante.Direccion = Console.ReadLine();
@@ -57,6 +65,7 @@ namespace Aplicacion.Interfaz
                             estudiante.Correo = Console.ReadLine();
                             Console.WriteLine("Ingrese el tipo de sangre del estudiante:");
                             gestionEstudiante.ObtenerListaTipoSangre();
+                            Console.ForegroundColor = ConsoleColor.Green;
                             estudiante.TipoSangre = Console.ReadLine();
                             Console.WriteLine("Ingrese el tutor del estudiante:");
                             estudiante.Tutor = Console.ReadLine();

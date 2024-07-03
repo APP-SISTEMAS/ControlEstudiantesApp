@@ -39,12 +39,14 @@ namespace Aplicacion.Interfaz
                         break;
                     case 4:
                         Console.Clear();
-                        gestionEstudiante.ObtenerListaMunicipios();
+                        gestionEstudiante.ObtenerListaDepartamentos();
                         Console.ReadKey();
                         break;
                     case 5:
                         Console.Clear();
+                        Console.WriteLine("Ingrese el Departamento");
                         gestionEstudiante.ObtenerListaDepartamentos();
+                        gestionEstudiante.ObtenerListaMunicipios(Console.ReadLine());
                         Console.ReadKey();
                         break;
                     case 0:

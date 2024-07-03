@@ -1,14 +1,19 @@
 ﻿using Aplicacion.Models;
 using System.Collections.Generic;
+using Aplicacion.Config;
 
 namespace Aplicacion.Gestores
 {
     public class GestionNotas
     {
-
+        private Database _database;
+        public GestionNotas()
+        {
+            _database = new Database();
+        }
         public bool Registrar(bool aprobado)
         {
-            return aprobado = CalcularPromedio();
+            return aprobado;
         }
 
         public bool ActualizarNota(bool aprobado)
