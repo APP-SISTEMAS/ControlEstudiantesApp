@@ -1,6 +1,7 @@
 ﻿using Aplicacion.Models;
 using System.Collections.Generic;
 using Aplicacion.Config;
+using System;
 
 namespace Aplicacion.Gestores
 {
@@ -13,7 +14,26 @@ namespace Aplicacion.Gestores
         }
         public bool Agregar(Asignatura asignatura)
         {
-            return true;
+            var result = false;
+            try
+                {
+                if (_database.Context.State != System.Data.ConnectionState.Open)
+                {
+                    _database.Context.Open();
+                }
+                var command = _database.Context.CreateCommand();
+                command.CommandText = "insert into Asignatura(nombre,activo) values(@nombre,@activo)";
+                command.Parameters.AddWithValue("@nombre", asignatura.AsignaturaNombre);
+                command.Parameters.AddWithValue("@activo", asignatura.Activo);
+                command.ExecuteNonQuery();
+                result = true;
+                _database.Context.Close();
+            }
+            catch(Exception ex)
+            {
+                throw new Exception("Error: "+ex);
+            }
+            return result;
         }
         public bool Modificar(Asignatura asignatura)
         {

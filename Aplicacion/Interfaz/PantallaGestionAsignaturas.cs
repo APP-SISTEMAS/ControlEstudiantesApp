@@ -27,31 +27,42 @@ namespace Aplicacion.Interfaz
                 switch (numeroOpcion)
                 {
                     case 1:
+                        Asignatura asignatura= new Asignatura();
                         Console.Clear();
-                        Console.WriteLine("Agregar Asignatura");
-                        Console.WriteLine("==================");
-
-                        Console.ForegroundColor = ConsoleColor.Green;
-                        /*Console.WriteLine("Ingrese el nombre de la Asignatura:");
-                        asignatura1.asignatura = Console.ReadLine();
-                        asignatura1.activo = true;
-                        Console.WriteLine("Asignatura agregada correctamente");
-                        Console.ResetColor();
-                        Console.ReadKey();*/
+                        try
+                            {
+                            Console.WriteLine("Agregar Asignatura");
+                            Console.WriteLine("===================");
+                            Console.WriteLine("Ingrese el nombre de la Asignatura:");
+                            asignatura.AsignaturaNombre = Console.ReadLine();
+                            asignatura.Activo = true;
+                            gestionAsignaturas.Agregar(asignatura);
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.WriteLine("Asignatura agregada correctamente");
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Error: " + ex.Message);
+                            Console.ReadKey();
+                        }
                         break;
                     case 2:
                         Console.Clear();
                         List<Asignatura> listaAsignaturas = new List<Asignatura>();
                         listaAsignaturas = gestionAsignaturas.ListarAsignaturas();
-                        Console.WriteLine("Listado de Asignaturas");
-                        Console.WriteLine("=======================");
-                        foreach (var asignatura in listaAsignaturas)
+
+                        // Imprimir la cabecera de la tabla
+                        Console.Write("-------------------------------------------");
+                        Console.WriteLine(string.Format("\n{0,-5} | {1,-20} | {2,-10} |", "Id", "Asignatura", "Activo"));
+                        Console.WriteLine("-------------------------------------------");
+
+                        // Imprimir los datos
+                        foreach (var asignatura1 in listaAsignaturas)
                         {
-                            Console.WriteLine("Id: " + asignatura.Id);
-                            Console.WriteLine("Asignatura: " + asignatura.AsignaturaNombre);
-                            Console.WriteLine("Estado: " + asignatura.Activo);
-                            Console.WriteLine("=======================");
+                            Console.WriteLine(string.Format("{0,-5} | {1,-20} | {2,-10} |", asignatura1.Id, asignatura1.AsignaturaNombre, asignatura1.Activo));
                         }
+                        Console.WriteLine("-------------------------------------------\n");
                         Console.ReadKey();
                        /*break;
                         case 3:

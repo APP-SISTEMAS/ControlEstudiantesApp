@@ -65,7 +65,7 @@ namespace Aplicacion.Gestores
             return mensajeValidacion;
         }
         public Boolean ValidarIdentificacion(string identidad)
-        {            
+        {
             if (_database.Context.State != ConnectionState.Open)
             {
                 _database.Context.Open();
@@ -146,7 +146,7 @@ namespace Aplicacion.Gestores
             // Imprimir los datos
             foreach (var municipio in municipios)
             {
-                Console.WriteLine(string.Format("{0,-5} | {1,-20} | {2,-20}|", municipio.Id, municipio.MunicipioNombre,municipio.DepartamentoNombre));
+                Console.WriteLine(string.Format("{0,-5} | {1,-20} | {2,-20}|", municipio.Id, municipio.MunicipioNombre, municipio.DepartamentoNombre));
             }
             Console.WriteLine("----------------------------------------------------");
 
@@ -228,7 +228,38 @@ namespace Aplicacion.Gestores
         }
         public Boolean Actualizar(Estudiante estudiante, int id)
         {
-            return true;
+            var result = false;
+            try
+            {
+                if (_database.Context.State != ConnectionState.Open)
+                {
+                    _database.Context.Open();
+                }
+                var command = _database.Context.CreateCommand();
+                command.CommandText = "UPDATE Estudiante SET nombre = @nombre, apellido = @apellido, fecha_nacimiento = @fecha_nacimiento, identidad = @identidad, genero = @genero, activo = @activo, telefono = @telefono, id_departamento = @id_departamento, id_municipio = @id_municipio, direccion = @direccion, correo = @correo, id_tipo_sangre = @id_tipo_sangre, tutor = @tutor WHERE id = @id";
+                command.Parameters.AddWithValue("@nombre", estudiante.Nombre);
+                command.Parameters.AddWithValue("@apellido", estudiante.Apellido);
+                command.Parameters.AddWithValue("@fecha_nacimiento", estudiante.FechaNacimiento);
+                command.Parameters.AddWithValue("@identidad", estudiante.Identificacion);
+                command.Parameters.AddWithValue("@genero", estudiante.Genero);
+                command.Parameters.AddWithValue("@activo", estudiante.Activo);
+                command.Parameters.AddWithValue("@telefono", estudiante.Telefono);
+                command.Parameters.AddWithValue("@id_departamento", estudiante.Departamento);
+                command.Parameters.AddWithValue("@id_municipio", estudiante.Municipio);
+                command.Parameters.AddWithValue("@direccion", estudiante.Direccion);
+                command.Parameters.AddWithValue("@correo", estudiante.Correo);
+                command.Parameters.AddWithValue("@id_tipo_sangre", estudiante.TipoSangre);
+                command.Parameters.AddWithValue("@tutor", estudiante.Tutor);
+                command.Parameters.AddWithValue("@id", id);
+                command.ExecuteNonQuery();
+                result = true;
+                _database.Context.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error: " + ex);
+            }
+            return result;
         }
         public Estudiante ObtenerInformacionEstudiante(int id)
         {
