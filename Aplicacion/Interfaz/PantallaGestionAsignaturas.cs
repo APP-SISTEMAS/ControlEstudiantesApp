@@ -1,36 +1,38 @@
 ﻿using Aplicacion.Gestores;
+using Aplicacion.Models;
 using System;
 using System.Collections.Generic;
-using Aplicacion.Models;
 
 namespace Aplicacion.Interfaz
 {
     public class PantallaGestionAsignaturas
     {
+        public static GestionAsignaturas gestionAsignaturas = new GestionAsignaturas();
+        public static Asignatura asignatura = new Asignatura();
         public static void MenuAsignatura()
         {
-            GestionAsignaturas gestionAsignaturas = new GestionAsignaturas();
             bool continuar = true;
             do
             {
                 Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.WriteLine("Gestion de Asignaturas");
                 Console.WriteLine("=======================");
-                Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.WriteLine("1)Agregar Asignatura");
                 Console.WriteLine("2)Listar Asignaturas");
                 Console.WriteLine("3)Modificar Asignatura");
-                Console.WriteLine("4)Eliminar Asignatura");
+                Console.WriteLine("4)Deshabilitar Asignatura");
+                Console.WriteLine("5)Habilitar Asignatura");
                 Console.WriteLine("0)Salir");
                 Console.WriteLine("Seleccione una opcion:");
                 int numeroOpcion = Convert.ToInt32(Console.ReadLine());
                 switch (numeroOpcion)
                 {
                     case 1:
-                        Asignatura asignatura= new Asignatura();
-                        Console.Clear();
                         try
-                            {
+                        {
+                            Console.Clear();
+                            Console.ForegroundColor = ConsoleColor.Green;
                             Console.WriteLine("Agregar Asignatura");
                             Console.WriteLine("===================");
                             Console.WriteLine("Ingrese el nombre de la Asignatura:");
@@ -39,6 +41,7 @@ namespace Aplicacion.Interfaz
                             gestionAsignaturas.Agregar(asignatura);
                             Console.ForegroundColor = ConsoleColor.Green;
                             Console.WriteLine("Asignatura agregada correctamente");
+                            Console.ReadKey();
                         }
                         catch (Exception ex)
                         {
@@ -49,68 +52,86 @@ namespace Aplicacion.Interfaz
                         break;
                     case 2:
                         Console.Clear();
-                        List<Asignatura> listaAsignaturas = new List<Asignatura>();
-                        listaAsignaturas = gestionAsignaturas.ListarAsignaturas();
-
-                        // Imprimir la cabecera de la tabla
-                        Console.Write("-------------------------------------------");
-                        Console.WriteLine(string.Format("\n{0,-5} | {1,-20} | {2,-10} |", "Id", "Asignatura", "Activo"));
-                        Console.WriteLine("-------------------------------------------");
-
-                        // Imprimir los datos
-                        foreach (var asignatura1 in listaAsignaturas)
-                        {
-                            Console.WriteLine(string.Format("{0,-5} | {1,-20} | {2,-10} |", asignatura1.Id, asignatura1.AsignaturaNombre, asignatura1.Activo));
-                        }
-                        Console.WriteLine("-------------------------------------------\n");
+                        ListarAsignaturas();
                         Console.ReadKey();
-                       /*break;
-                        case 3:
+                        break;
+                    case 3:
+                        try
+                        {
                             Console.Clear();
+                            Console.ForegroundColor = ConsoleColor.Green;
                             Console.WriteLine("Modificar Asignatura");
                             Console.WriteLine("====================");
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine("*Nota: Solo se pueden modificar nombre y estado de asignaturas sin calificaciones asignadas");
-                            Console.ResetColor();
-                            Console.WriteLine("Ingrese el Id:");
+                            ListarAsignaturas();
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.WriteLine("Ingrese el Id de la Asignatura:");
                             int idModificar = Convert.ToInt32(Console.ReadLine());
-                            if (idModificar == asignatura1.id)
+                            asignatura.Id = idModificar;
+                            var result = gestionAsignaturas.VerificarSiHayNotas(idModificar);
+                            if (result)
                             {
-                                Console.ForegroundColor = ConsoleColor.Green;
-                                Console.WriteLine("Nuevo nombre de la Asignatura:");
-                                asignatura1.asignatura = Console.ReadLine();
-                                Console.WriteLine("Ingrese el estado:");
-                                asignatura1.activo = Convert.ToBoolean(Console.ReadLine());
-                                Console.WriteLine("Asignatura modificada correctamente");
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("No se puede modificar la asignatura porque tiene notas asociadas");
+                                Console.ReadKey();
+                                break;
                             }
-                            else
-                            {
-                                Console.WriteLine("Asignatura no encontrada");
-                            }
-                            Console.ResetColor();
+                            Console.WriteLine("Ingrese el nuevo nombre de la Asignatura:");
+                            string nombreModificar = Console.ReadLine();
+                            asignatura.AsignaturaNombre = nombreModificar;
+                            gestionAsignaturas.Modificar(asignatura);
+                            Console.WriteLine("Asignatura modificada correctamente");
                             Console.ReadKey();
-                            break;
-                        case 4:
-                            Console.Clear();
-                            Console.WriteLine("Eliminar Asignatura");
-                            Console.WriteLine("====================");
+                        }
+                        catch (Exception ex)
+                        {
                             Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine("*Nota: Solo se pueden eliminar asignaturas sin calificaciones asignadas");
-                            Console.ResetColor();
-                            Console.WriteLine("Ingrese el Id:");
-                            int idEliminar = Convert.ToInt32(Console.ReadLine());
-                            if (idEliminar == asignatura1.id)
-                            {
-                                Console.ForegroundColor = ConsoleColor.Green;
-                                asignatura1.activo = false;
-                                Console.WriteLine("Asignatura eliminada correctamente");
-                            }
-                            else
-                            {
-                                Console.WriteLine("Asignatura no encontrada");
-                            }
-                            Console.ResetColor();
-                            Console.ReadKey();*/
+                            Console.WriteLine("Error: " + ex.Message);
+                            Console.ReadKey();
+                        }
+                        break;
+                    case 4:
+                        try
+                        {
+                            Console.Clear();
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.WriteLine("Deshabilitar Asignatura");
+                            Console.WriteLine("=======================");
+                            ListarAsignaturas();
+                            Console.WriteLine("Ingrese el Id de la Asignatura:");
+                            int idDeshabilitar = Convert.ToInt32(Console.ReadLine());
+                            gestionAsignaturas.Deshabilitar(idDeshabilitar);
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.WriteLine("Asignatura deshabilitada correctamente");
+                            Console.ReadKey();
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Error: " + ex.Message);
+                            Console.ReadKey();
+                        }
+                        break;
+                    case 5:
+                        try
+                        {
+                            Console.Clear();
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.WriteLine("Habilitar Asignatura");
+                            Console.WriteLine("=====================");
+                            ListarAsignaturas();
+                            Console.WriteLine("Ingrese el Id de la Asignatura:");
+                            int idHabilitar = Convert.ToInt32(Console.ReadLine());
+                            gestionAsignaturas.Habilitar(idHabilitar);
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.WriteLine("Asignatura habilitada correctamente");
+                            Console.ReadKey();
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Error: " + ex.Message);
+                            Console.ReadKey();
+                        }
                         break;
                     case 0:
                         continuar = false;
@@ -120,6 +141,24 @@ namespace Aplicacion.Interfaz
                         break;
                 }
             } while (continuar);
+        }
+        public static void ListarAsignaturas()
+        {
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            List<Asignatura> listaAsignaturas = new List<Asignatura>();
+            listaAsignaturas = gestionAsignaturas.ListarAsignaturas();
+
+            // Imprimir la cabecera de la tabla
+            Console.Write("-------------------------------------------");
+            Console.WriteLine(string.Format("\n{0,-5} | {1,-20} | {2,-10} |", "Id", "Asignatura", "Activo"));
+            Console.WriteLine("-------------------------------------------");
+
+            // Imprimir los datos
+            foreach (var asignatura1 in listaAsignaturas)
+            {
+                Console.WriteLine(string.Format("{0,-5} | {1,-20} | {2,-10} |", asignatura1.Id, asignatura1.AsignaturaNombre, asignatura1.Activo));
+            }
+            Console.WriteLine("-------------------------------------------\n");
         }
     }
 }

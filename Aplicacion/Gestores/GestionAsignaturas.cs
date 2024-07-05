@@ -1,7 +1,7 @@
-﻿using Aplicacion.Models;
-using System.Collections.Generic;
-using Aplicacion.Config;
+﻿using Aplicacion.Config;
+using Aplicacion.Models;
 using System;
+using System.Collections.Generic;
 
 namespace Aplicacion.Gestores
 {
@@ -16,7 +16,7 @@ namespace Aplicacion.Gestores
         {
             var result = false;
             try
-                {
+            {
                 if (_database.Context.State != System.Data.ConnectionState.Open)
                 {
                     _database.Context.Open();
@@ -29,23 +29,100 @@ namespace Aplicacion.Gestores
                 result = true;
                 _database.Context.Close();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                throw new Exception("Error: "+ex);
+                throw new Exception("Error: " + ex);
             }
             return result;
         }
         public bool Modificar(Asignatura asignatura)
         {
-            return true;
+            var result = false;
+            try
+            {
+                if (_database.Context.State != System.Data.ConnectionState.Open)
+                {
+                    _database.Context.Open();
+                }
+                var command = _database.Context.CreateCommand();
+                command.CommandText = "update Asignatura set nombre = @nombre where id = @id";
+                command.Parameters.AddWithValue("@nombre", asignatura.AsignaturaNombre);
+                command.Parameters.AddWithValue("@id", asignatura.Id);
+                command.ExecuteNonQuery();
+                result = true;
+                _database.Context.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error: " + ex);
+            }
+            return result;
         }
-        public bool Eliminar(Asignatura asignatura)
+        public bool Deshabilitar(int id)
         {
-            return false;
+            var result = false;
+            try
+            {
+                if (_database.Context.State != System.Data.ConnectionState.Open)
+                {
+                    _database.Context.Open();
+                }
+                var command = _database.Context.CreateCommand();
+                command.CommandText = "update Asignatura set activo = 0 where id = @id";
+                command.Parameters.AddWithValue("@id", id);
+                command.ExecuteNonQuery();
+                result = true;
+                _database.Context.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error: " + ex);
+            }
+            return result;
         }
-        public bool VerificarExistencia(Asignatura asignatura)
+        public bool Habilitar(int id)
         {
-            return true;
+            var result = false;
+            try
+            {
+                if (_database.Context.State != System.Data.ConnectionState.Open)
+                {
+                    _database.Context.Open();
+                }
+                var command = _database.Context.CreateCommand();
+                command.CommandText = "update Asignatura set activo = 1 where id = @id";
+                command.Parameters.AddWithValue("@id", id);
+                command.ExecuteNonQuery();
+                result = true;
+                _database.Context.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error: " + ex);
+            }
+            return result;
+        }
+        public bool VerificarSiHayNotas(int id)
+        {
+            var result = false;
+            try
+            {
+                if (_database.Context.State != System.Data.ConnectionState.Open)
+                {
+                    _database.Context.Open();
+                }
+                var command = _database.Context.CreateCommand();
+                command.CommandText = "select count(1) from Notas where id_asignatura = @id";
+                command.Parameters.AddWithValue("@id", id);
+                var count = (int)command.ExecuteScalar();
+                if (count > 0) return result = true;
+                _database.Context.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error: " + ex);
+            }
+            return result;
         }
         public List<Asignatura> ListarAsignaturas()
         {

@@ -320,7 +320,6 @@ namespace Aplicacion.Gestores
         }
         public List<Estudiante> ObtenerListaEstudiantes()
         {
-            Console.ForegroundColor = ConsoleColor.DarkGreen;
             DataTable data = new DataTable();
             if (_database.Context.State != ConnectionState.Open)
             {
@@ -342,19 +341,7 @@ namespace Aplicacion.Gestores
                     Identificacion = fila["identidad"].ToString()
                 });
             }
-            // Imprimir la cabecera de la tabla
-            Console.Write("--------------------------------------------------------------");
-            Console.WriteLine(string.Format("\n{0,-3} | {1,-10} | {2,-10} | {3,-10} | {4,-15} |", "Id", "Nombre", "Apellido", "Natalicio", "Identificacion"));
-            Console.WriteLine("--------------------------------------------------------------");
-
-            // Imprimir los datos
-            foreach (var estudiante in estudiantes)
-            {
-                Console.WriteLine(string.Format("{0,-3} | {1,-10} | {2,-10} | {3,-10} | {4,-15} |", estudiante.Id, estudiante.Nombre, estudiante.Apellido, estudiante.FechaNacimiento.ToString().Remove(10), estudiante.Identificacion));
-            }
-            Console.WriteLine("--------------------------------------------------------------");
             _database.Context.Close();
-            Console.ResetColor();
             return estudiantes;
         }
     }
