@@ -1,20 +1,23 @@
 ﻿using Aplicacion.Gestores;
+using Aplicacion.Models;
 using System;
+using System.Collections.Generic;
 
 namespace Aplicacion.Interfaz
 {
     internal class PantallaGestionHabilitacionEstudiante
     {
+
+        public static GestionHabilitacionEstudiante gestionHabilitacionEstudiante = new GestionHabilitacionEstudiante();
         public static void MenuHabilitacionEstudiante()
         {
-            GestionHabilitacionEstudiante gestionHabilitacionEstudiante = new GestionHabilitacionEstudiante();
             bool continuar = true;
             do
             {
                 Console.Clear();
                 int idEstudiante;
                 string motivo;
-                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.ForegroundColor = ConsoleColor.DarkCyan;
                 Console.WriteLine("Gestion de Estudiante");
                 Console.WriteLine("1)Habilitar");
                 Console.WriteLine("2)Deshabilitar");
@@ -28,8 +31,8 @@ namespace Aplicacion.Interfaz
                 {
                     case 1:
                         Console.WriteLine("Habilitar Estudiante");
-                        Console.WriteLine("Que estudiante desea Habilitar?");
-                        gestionHabilitacionEstudiante.EstudiantesDeshabilitados();
+                        Console.WriteLine("Que estudiante1 desea Habilitar?");
+                        MostrarEstudiantesDeshabilitados();
                         idEstudiante = Convert.ToInt32(Console.ReadLine());
                         Console.WriteLine("Ingrese el motivo de la habilitacion:");
                         motivo = Console.ReadLine();
@@ -39,8 +42,8 @@ namespace Aplicacion.Interfaz
                         break;
                     case 2:
                         Console.WriteLine("Deshabilitar Estudiante");
-                        Console.WriteLine("Que estudiante desea deshabilitar?");
-                        gestionHabilitacionEstudiante.EstudiantesHabilitados();
+                        Console.WriteLine("Que estudiante1 desea deshabilitar?");
+                        MostrarEstudiantesHabilitados();
                         idEstudiante = Convert.ToInt32(Console.ReadLine());
                         Console.WriteLine("Ingrese el motivo de la deshabilitacion:");
                         motivo = Console.ReadLine();
@@ -49,15 +52,15 @@ namespace Aplicacion.Interfaz
                         Console.ReadKey();
                         break;
                     case 3:
-                        gestionHabilitacionEstudiante.EstudiantesHabilitados();
+                        MostrarEstudiantesHabilitados();
                         Console.ReadKey();
                         break;
                     case 4:
-                        gestionHabilitacionEstudiante.EstudiantesDeshabilitados();
+                        MostrarEstudiantesDeshabilitados();
                         Console.ReadKey();
                         break;
                     case 5:
-                        gestionHabilitacionEstudiante.EstudiantesReingresados();
+                        MostrarEstudiantesReingresados();
                         Console.ReadKey();
                         break;
                     case 0:
@@ -69,6 +72,60 @@ namespace Aplicacion.Interfaz
                 }
                 Console.ResetColor();
             } while (continuar);
+        }
+        public static void MostrarEstudiantesHabilitados()
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            List<Estudiante> listaEstudiantes = new List<Estudiante>();
+            listaEstudiantes=gestionHabilitacionEstudiante.EstudiantesHabilitados();
+            // Imprimir la cabecera de la tabla
+            Console.Write("---------------------------------");
+            Console.WriteLine(string.Format("\n{0,-5} | {1,-10} | {2,-10} |", "Id", "Nombre", "Apellido"));
+            Console.WriteLine("---------------------------------");
+
+            // Imprimir los datos
+            foreach (var estudiante1 in listaEstudiantes)
+            {
+                Console.WriteLine(string.Format("{0,-5} | {1,-10} | {2,-10} |", estudiante1.Id, estudiante1.Nombre, estudiante1.Apellido));
+            }
+            Console.WriteLine("---------------------------------\n");
+            Console.ResetColor();
+        }
+        public static void MostrarEstudiantesDeshabilitados()
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            List<Estudiante> listaEstudiantes = gestionHabilitacionEstudiante.EstudiantesDeshabilitados();
+            listaEstudiantes = new List<Estudiante>();
+            // Imprimir la cabecera de la tabla
+            Console.Write("------------------------------------------------------------");
+            Console.WriteLine(string.Format("\n{0,-5} | {1,-10} | {2,-10} | {3,-25} |", "Id", "Nombre", "Apellido", "Motivo"));
+            Console.WriteLine("------------------------------------------------------------");
+
+            // Imprimir los datos
+            foreach (var estudiante1 in listaEstudiantes)
+            {
+                Console.WriteLine(string.Format("{0,-5} | {1,-10} | {2,-10} | {3,-25} |", estudiante1.Id, estudiante1.Nombre, estudiante1.Apellido, estudiante1.Motivo));
+            }
+            Console.WriteLine("------------------------------------------------------------\n");
+            Console.ResetColor();
+        }
+        public static void MostrarEstudiantesReingresados()
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            List<Estudiante> listaEstudiantes = new List<Estudiante>();
+            listaEstudiantes = gestionHabilitacionEstudiante.EstudiantesReingresados();
+            // Imprimir la cabecera de la tabla
+            Console.Write("------------------------------------------------------------");
+            Console.WriteLine(string.Format("\n{0,-5} | {1,-10} | {2,-10} | {3,-25} |", "Id", "Nombre", "Apellido", "Motivo"));
+            Console.WriteLine("------------------------------------------------------------");
+
+            // Imprimir los datos
+            foreach (var estudiante1 in listaEstudiantes)
+            {
+                Console.WriteLine(string.Format("{0,-5} | {1,-10} | {2,-10} | {3,-25} |", estudiante1.Id, estudiante1.Nombre, estudiante1.Apellido, estudiante1.Motivo));
+            }
+            Console.WriteLine("------------------------------------------------------------\n");
+            Console.ResetColor();
         }
     }
 }

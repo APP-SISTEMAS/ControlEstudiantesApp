@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Aplicacion.Interfaz
 {
-    public class PantallaGestionAsignaturas
+    public class PantallaGestionAsignatura
     {
         public static GestionAsignaturas gestionAsignaturas = new GestionAsignaturas();
         public static Asignatura asignatura = new Asignatura();
@@ -15,7 +15,7 @@ namespace Aplicacion.Interfaz
             do
             {
                 Console.Clear();
-                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.ForegroundColor = ConsoleColor.DarkCyan;
                 Console.WriteLine("Gestion de Asignaturas");
                 Console.WriteLine("=======================");
                 Console.WriteLine("1)Agregar Asignatura");
@@ -141,6 +141,7 @@ namespace Aplicacion.Interfaz
                         break;
                 }
             } while (continuar);
+            Console.ResetColor();
         }
         public static void ListarAsignaturas()
         {

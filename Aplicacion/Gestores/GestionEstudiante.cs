@@ -98,20 +98,7 @@ namespace Aplicacion.Gestores
                     DepartamentoNombre = fila["nombre"].ToString()
                 });
             }
-            // Imprimir la cabecera de la tabla
-            Console.Write("------------------------------");
-            Console.WriteLine(string.Format("\n{0,-5} | {1,-20} |", "Id", "Departamento"));
-            Console.WriteLine("------------------------------");
-
-            // Imprimir los datos
-            foreach (var departamento in departamentos)
-            {
-                Console.WriteLine(string.Format("{0,-5} | {1,-20} |", departamento.Id, departamento.DepartamentoNombre));
-            }
-            Console.WriteLine("------------------------------");
-
             this._database.Context.Close();
-            Console.ResetColor();
             return departamentos;
         }
         public List<Municipio> ObtenerListaMunicipios(string idDepartamento)
@@ -138,25 +125,11 @@ namespace Aplicacion.Gestores
                     DepartamentoNombre = fila["departamento_nombre"].ToString()
                 });
             }
-            // Imprimir la cabecera de la tabla
-            Console.Write("----------------------------------------------------");
-            Console.WriteLine(string.Format("\n{0,-5} | {1,-20} | {2,-20}|", "Id", "Municipio", "Departamento"));
-            Console.WriteLine("----------------------------------------------------");
-
-            // Imprimir los datos
-            foreach (var municipio in municipios)
-            {
-                Console.WriteLine(string.Format("{0,-5} | {1,-20} | {2,-20}|", municipio.Id, municipio.MunicipioNombre, municipio.DepartamentoNombre));
-            }
-            Console.WriteLine("----------------------------------------------------");
-
             this._database.Context.Close();
-            Console.ResetColor();
             return municipios;
         }
         public List<TipoSangre> ObtenerListaTipoSangre()
         {
-            Console.ForegroundColor = ConsoleColor.DarkGreen;
             DataTable data = new DataTable();
             if (this._database.Context.State != ConnectionState.Open)
             {
@@ -175,20 +148,7 @@ namespace Aplicacion.Gestores
                     SangreNombre = fila["nombre"].ToString()
                 });
             }
-            // Imprimir la cabecera de la tabla
-            Console.Write("--------------------");
-            Console.WriteLine(string.Format("\n{0,-5} | {1,-10}|", "Id", "Tipo Sangre"));
-            Console.WriteLine("--------------------");
-
-            // Imprimir los datos
-            foreach (var sangre in tiposangre)
-            {
-                Console.WriteLine(string.Format("{0,-5} | {1,-10} |", sangre.Id, sangre.SangreNombre));
-            }
-            Console.WriteLine("--------------------");
-
             this._database.Context.Close();
-            Console.ResetColor();
             return tiposangre;
         }
         public Boolean Registrar(Estudiante estudiante)
@@ -296,24 +256,6 @@ namespace Aplicacion.Gestores
                 estudiante.TipoSangre = fila["tipo_sangre"].ToString();
                 estudiante.Tutor = fila["tutor"].ToString();
             }
-            Console.ForegroundColor = ConsoleColor.DarkCyan;
-            Console.WriteLine("\tFicha Estudiantil");
-            Console.WriteLine("----------------------------------");
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine("Id: " + estudiante.Id);
-            Console.WriteLine("Nombre: " + estudiante.Nombre);
-            Console.WriteLine("Apellido: " + estudiante.Apellido);
-            Console.WriteLine("Fecha de Nacimiento: " + estudiante.FechaNacimiento);
-            Console.WriteLine("Identificacion: " + estudiante.Identificacion);
-            Console.WriteLine("Genero: " + estudiante.Genero);
-            Console.WriteLine("Activo: " + estudiante.Activo);
-            Console.WriteLine("Telefono: " + estudiante.Telefono);
-            Console.WriteLine("Departamento: " + estudiante.Departamento);
-            Console.WriteLine("Municipio: " + estudiante.Municipio);
-            Console.WriteLine("Direccion: " + estudiante.Direccion);
-            Console.WriteLine("Correo: " + estudiante.Correo);
-            Console.WriteLine("Tipo de Sangre: " + estudiante.TipoSangre);
-            Console.WriteLine("Tutor: " + estudiante.Tutor);
             _database.Context.Close();
             Console.ResetColor();
             return estudiante;

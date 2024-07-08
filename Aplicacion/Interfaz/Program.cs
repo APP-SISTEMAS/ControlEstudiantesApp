@@ -12,7 +12,7 @@ namespace Aplicacion.Interfaz
             do
             {
                 Console.Clear();
-                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.ForegroundColor = ConsoleColor.DarkCyan;
                 Console.WriteLine("Aplicacion Control de Centro Educativo");
                 Console.WriteLine("==================================");
                 Console.WriteLine("1)Gestion de Estudiante");
@@ -29,7 +29,7 @@ namespace Aplicacion.Interfaz
                         break;
                     case 2:
                         Console.Clear();
-                        PantallaGestionAsignaturas.MenuAsignatura();
+                        PantallaGestionAsignatura.MenuAsignatura();
                         break;
                     case 3:
                         Console.Clear();

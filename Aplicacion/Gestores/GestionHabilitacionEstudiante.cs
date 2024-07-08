@@ -74,7 +74,6 @@ namespace Aplicacion.Gestores
         }
         public List<Estudiante> EstudiantesHabilitados()
         {
-            Console.ForegroundColor = ConsoleColor.Green;
             DataTable data = new DataTable();
             if (_database.Context.State != ConnectionState.Open)
             {
@@ -94,25 +93,11 @@ namespace Aplicacion.Gestores
                     Apellido = fila["apellido"].ToString()
                 });
             }
-            // Imprimir la cabecera de la tabla
-            Console.Write("---------------------------------");
-            Console.WriteLine(string.Format("\n{0,-5} | {1,-10} | {2,-10} |", "Id", "Nombre", "Apellido"));
-            Console.WriteLine("---------------------------------");
-
-            // Imprimir los datos
-            foreach (var estudiante in estudiantes)
-            {
-                Console.WriteLine(string.Format("{0,-5} | {1,-10} | {2,-10} |", estudiante.Id, estudiante.Nombre, estudiante.Apellido));
-            }
-            Console.WriteLine("---------------------------------\n");
-
             _database.Context.Close();
-            Console.ResetColor();
             return estudiantes;
         }
         public List<Estudiante> EstudiantesDeshabilitados()
         {
-            Console.ForegroundColor = ConsoleColor.Green;
             DataTable data = new DataTable();
             if (_database.Context.State != ConnectionState.Open)
             {
@@ -133,27 +118,11 @@ namespace Aplicacion.Gestores
                     Motivo = fila["motivo"].ToString()
                 });
             }
-            // Imprimir la cabecera de la tabla
-            Console.Write("------------------------------------------------------------");
-            Console.WriteLine(string.Format("\n{0,-5} | {1,-10} | {2,-10} | {3,-25} |", "Id", "Nombre", "Apellido", "Motivo"));
-            Console.WriteLine("------------------------------------------------------------");
-
-            // Imprimir los datos
-            foreach (var estudiante in estudiantes)
-            {
-                Console.WriteLine(string.Format("{0,-5} | {1,-10} | {2,-10} | {3,-25} |", estudiante.Id, estudiante.Nombre, estudiante.Apellido, estudiante.Motivo));
-            }
-
-            Console.WriteLine("------------------------------------------------------------\n");
-
-
             _database.Context.Close();
-            Console.ResetColor();
             return estudiantes;
         }
         public List<Estudiante> EstudiantesReingresados()
         {
-            Console.ForegroundColor = ConsoleColor.Green;
             DataTable data = new DataTable();
             if (_database.Context.State != ConnectionState.Open)
             {
@@ -174,21 +143,7 @@ namespace Aplicacion.Gestores
                     Motivo = fila["motivo"].ToString()
                 });
             }
-            // Imprimir la cabecera de la tabla
-            Console.Write("------------------------------------------------------------");
-            Console.WriteLine(string.Format("\n{0,-5} | {1,-10} | {2,-10} | {3,-25} |", "Id", "Nombre", "Apellido", "Motivo"));
-            Console.WriteLine("------------------------------------------------------------");
-
-            // Imprimir los datos
-            foreach (var estudiante in estudiantes)
-            {
-                Console.WriteLine(string.Format("{0,-5} | {1,-10} | {2,-10} | {3,-25} |", estudiante.Id, estudiante.Nombre, estudiante.Apellido, estudiante.Motivo));
-            }
-            Console.WriteLine("------------------------------------------------------------\n");
-
-
             _database.Context.Close();
-            Console.ResetColor();
             return estudiantes;
         }
     }
