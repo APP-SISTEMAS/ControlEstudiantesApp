@@ -103,7 +103,6 @@ namespace Aplicacion.Gestores
         }
         public List<Municipio> ObtenerListaMunicipios(string idDepartamento)
         {
-            Console.ForegroundColor = ConsoleColor.DarkGreen;
             DataTable data = new DataTable();
             if (this._database.Context.State != ConnectionState.Open)
             {
@@ -257,7 +256,6 @@ namespace Aplicacion.Gestores
                 estudiante.Tutor = fila["tutor"].ToString();
             }
             _database.Context.Close();
-            Console.ResetColor();
             return estudiante;
         }
         public List<Estudiante> ObtenerListaEstudiantes()

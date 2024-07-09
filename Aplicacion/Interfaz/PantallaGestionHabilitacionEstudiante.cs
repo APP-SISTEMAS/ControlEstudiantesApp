@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Aplicacion.Interfaz
 {
-    internal class PantallaGestionHabilitacionEstudiante
+    public class PantallaGestionHabilitacionEstudiante
     {
 
         public static GestionHabilitacionEstudiante gestionHabilitacionEstudiante = new GestionHabilitacionEstudiante();

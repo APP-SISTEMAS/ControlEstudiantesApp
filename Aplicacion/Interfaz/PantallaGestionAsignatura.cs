@@ -11,6 +11,7 @@ namespace Aplicacion.Interfaz
         public static Asignatura asignatura = new Asignatura();
         public static void MenuAsignatura()
         {
+            PantallaGestionAsignatura pantallaGestionAsignatura = new PantallaGestionAsignatura();
             bool continuar = true;
             do
             {
@@ -52,7 +53,7 @@ namespace Aplicacion.Interfaz
                         break;
                     case 2:
                         Console.Clear();
-                        ListarAsignaturas();
+                        pantallaGestionAsignatura.ListarAsignaturas();
                         Console.ReadKey();
                         break;
                     case 3:
@@ -62,7 +63,7 @@ namespace Aplicacion.Interfaz
                             Console.ForegroundColor = ConsoleColor.Green;
                             Console.WriteLine("Modificar Asignatura");
                             Console.WriteLine("====================");
-                            ListarAsignaturas();
+                            pantallaGestionAsignatura.ListarAsignaturas();
                             Console.ForegroundColor = ConsoleColor.Green;
                             Console.WriteLine("Ingrese el Id de la Asignatura:");
                             int idModificar = Convert.ToInt32(Console.ReadLine());
@@ -71,7 +72,7 @@ namespace Aplicacion.Interfaz
                             if (result)
                             {
                                 Console.ForegroundColor = ConsoleColor.Red;
-                                Console.WriteLine("No se puede modificar la asignatura porque tiene notas asociadas");
+                                Console.WriteLine("No se puede modificar la asignatura porque tiene notas registradas");
                                 Console.ReadKey();
                                 break;
                             }
@@ -96,7 +97,7 @@ namespace Aplicacion.Interfaz
                             Console.ForegroundColor = ConsoleColor.Green;
                             Console.WriteLine("Deshabilitar Asignatura");
                             Console.WriteLine("=======================");
-                            ListarAsignaturas();
+                            pantallaGestionAsignatura.ListarAsignaturas();
                             Console.WriteLine("Ingrese el Id de la Asignatura:");
                             int idDeshabilitar = Convert.ToInt32(Console.ReadLine());
                             gestionAsignaturas.Deshabilitar(idDeshabilitar);
@@ -118,7 +119,7 @@ namespace Aplicacion.Interfaz
                             Console.ForegroundColor = ConsoleColor.Green;
                             Console.WriteLine("Habilitar Asignatura");
                             Console.WriteLine("=====================");
-                            ListarAsignaturas();
+                            pantallaGestionAsignatura.ListarAsignaturas();
                             Console.WriteLine("Ingrese el Id de la Asignatura:");
                             int idHabilitar = Convert.ToInt32(Console.ReadLine());
                             gestionAsignaturas.Habilitar(idHabilitar);
@@ -143,7 +144,7 @@ namespace Aplicacion.Interfaz
             } while (continuar);
             Console.ResetColor();
         }
-        public static void ListarAsignaturas()
+        public void ListarAsignaturas()
         {
             Console.ForegroundColor = ConsoleColor.DarkGreen;
             List<Asignatura> listaAsignaturas = new List<Asignatura>();
@@ -157,7 +158,7 @@ namespace Aplicacion.Interfaz
             // Imprimir los datos
             foreach (var asignatura1 in listaAsignaturas)
             {
-                Console.WriteLine(string.Format("{0,-5} | {1,-20} | {2,-10} |", asignatura1.Id, asignatura1.AsignaturaNombre, asignatura1.Activo));
+                Console.WriteLine(string.Format("{0,-5} | {1,-20} | {2,-10} |", asignatura1.Id, asignatura1.AsignaturaNombre, (asignatura1.Activo ? "Si" : "No")));
             }
             Console.WriteLine("-------------------------------------------\n");
         }

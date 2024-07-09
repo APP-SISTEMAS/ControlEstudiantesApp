@@ -11,6 +11,7 @@ namespace Aplicacion.Interfaz
         public static Estudiante estudiante = new Estudiante();
         public static void MenuEstudiante()
         {
+            PantallaGestionEstudiante pantallaGestionEstudiante = new PantallaGestionEstudiante();
             bool continuar = true;
             do
             {
@@ -98,7 +99,7 @@ namespace Aplicacion.Interfaz
                             Console.Clear();
                             Console.ForegroundColor = ConsoleColor.Green;
                             Console.WriteLine("Actualizar Estudiante");
-                            ListarEstudiantes();
+                            pantallaGestionEstudiante.ListarEstudiantes();
                             Console.ForegroundColor = ConsoleColor.Green;
                             Console.WriteLine("Seleccione el ID del estudiante1 a actualizar:");
                             int id = Convert.ToInt32(Console.ReadLine());
@@ -106,13 +107,11 @@ namespace Aplicacion.Interfaz
                             Estudiante estudianteActualizar = MostrarInformacionEstudiante(id);
 
                             Console.ForegroundColor = ConsoleColor.DarkYellow;
-                            Console.WriteLine("¿Desea actualizar la información de este estudiante1? (s/n)");
+                            Console.WriteLine("¿Desea actualizar la información de este estudiante1?");
+                            Console.WriteLine("s = Si, n = No");
                             string respuesta = Console.ReadLine().ToLower();
-                            if (respuesta != "s")
-                            {
-                                Console.WriteLine("Actualización cancelada.");
-                                break;
-                            }
+                            if (respuesta != "s") break;
+                            
 
                             Console.ForegroundColor = ConsoleColor.Green;
                             Console.WriteLine("Nombre registrado: " + estudianteActualizar.Nombre);
@@ -201,7 +200,7 @@ namespace Aplicacion.Interfaz
                     case 4:
                         Console.Clear();
                         Console.ForegroundColor = ConsoleColor.Green;
-                        ListarEstudiantes();
+                        pantallaGestionEstudiante.ListarEstudiantes();
                         Console.ForegroundColor = ConsoleColor.Green;
                         Console.WriteLine("Seleccione el estudiante1 del que desea ver la información:");
                         Console.WriteLine("Nota: Seleccione el ID");
@@ -219,7 +218,7 @@ namespace Aplicacion.Interfaz
             } while (continuar);
             Console.ResetColor();
         }
-        public static void ListarEstudiantes()
+        public void ListarEstudiantes()
         {
             Console.ForegroundColor = ConsoleColor.DarkGreen;
             List<Estudiante> listaEstudiantes = new List<Estudiante>();
@@ -277,7 +276,7 @@ namespace Aplicacion.Interfaz
 
             Console.ResetColor();
         }
-        public static Estudiante MostrarInformacionEstudiante(int id)
+        public static Estudiante MostrarInformacionEstudiante(int id)   
         {
             Estudiante estudiante2 = new Estudiante();
             estudiante2 = gestionEstudiante.ObtenerInformacionEstudiante(id);
@@ -291,7 +290,7 @@ namespace Aplicacion.Interfaz
             Console.WriteLine("Fecha de Nacimiento: " + estudiante2.FechaNacimiento);
             Console.WriteLine("Identificacion: " + estudiante2.Identificacion);
             Console.WriteLine("Genero: " + estudiante2.Genero);
-            Console.WriteLine("Activo: " + estudiante2.Activo);
+            Console.WriteLine("Activo: " + (estudiante2.Activo ? "Si":"No"));
             Console.WriteLine("Telefono: " + estudiante2.Telefono);
             Console.WriteLine("Departamento: " + estudiante2.Departamento);
             Console.WriteLine("Municipio: " + estudiante2.Municipio);
