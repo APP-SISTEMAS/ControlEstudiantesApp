@@ -17,7 +17,7 @@ namespace Aplicacion.Interfaz
                 Console.WriteLine("==================================");
                 Console.WriteLine("1)Gestion de Estudiante");
                 Console.WriteLine("2)Gestion de Asignaturas");
-                Console.WriteLine("3)Gestion de Notas y Reportes finales");
+                Console.WriteLine("3)Gestion de Registro de Notas y Reportes de Notas");
                 Console.WriteLine("0)Salir");
                 Console.WriteLine("Seleccione una opcion:");
                 int numeroOpcion = Convert.ToInt32(Console.ReadLine());

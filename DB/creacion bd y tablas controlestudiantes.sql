@@ -17,7 +17,7 @@ GO
 CREATE TABLE Municipio (
     id INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
     id_departamento INT NOT NULL,
-    municipio VARCHAR(30) NOT NULL,
+    municipio VARCHAR(50) NOT NULL,
     FOREIGN KEY (id_departamento) REFERENCES Departamento(id)
 )
 GO
@@ -32,8 +32,8 @@ GO
 -- Crear la tabla Estudiante
 CREATE TABLE Estudiante (
     id INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
-    nombre VARCHAR(20) NOT NULL,
-    apellido VARCHAR(20) NOT NULL,
+    nombre VARCHAR(50) NOT NULL,
+    apellido VARCHAR(50) NOT NULL,
     fecha_nacimiento SMALLDATETIME NOT NULL,
     identidad VARCHAR(20) NOT NULL,
     genero CHAR(1) NOT NULL CHECK (genero IN ('M', 'F')),
@@ -41,10 +41,10 @@ CREATE TABLE Estudiante (
     telefono VARCHAR(20),
     id_departamento INT NOT NULL,
     id_municipio INT NOT NULL,
-    direccion VARCHAR(100) NOT NULL,
-    correo VARCHAR(30),
+    direccion VARCHAR(200) NOT NULL,
+    correo VARCHAR(50),
     id_tipo_sangre INT NOT NULL,
-    tutor VARCHAR(50) NOT NULL,
+    tutor VARCHAR(100) NOT NULL,
     FOREIGN KEY (id_departamento) REFERENCES Departamento(id),
     FOREIGN KEY (id_municipio) REFERENCES Municipio(id),
     FOREIGN KEY (id_tipo_sangre) REFERENCES Tipo_Sangre(id)
@@ -55,7 +55,7 @@ GO
 CREATE TABLE Log_Estudiante (
     id_estudiante INT PRIMARY KEY NOT NULL,
     estado BIT NOT NULL,
-    motivo VARCHAR(100),
+    motivo VARCHAR(250),
     FOREIGN KEY (id_estudiante) REFERENCES Estudiante(id)
 )
 GO

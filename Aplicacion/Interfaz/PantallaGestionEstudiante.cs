@@ -18,9 +18,9 @@ namespace Aplicacion.Interfaz
                 Console.Clear();
                 Console.ForegroundColor = ConsoleColor.DarkCyan;
                 Console.WriteLine("Gestion de Estudiante");
-                Console.WriteLine("1)Registrar");
-                Console.WriteLine("2)Actualizar");
-                Console.WriteLine("3)Gestion Habilitacion-Deshabilitacion");
+                Console.WriteLine("1)Registrar Estudiante");
+                Console.WriteLine("2)Modificar Estudiante");
+                Console.WriteLine("3)Gestion Habilitacion-Deshabilitacion Estudiante");
                 Console.WriteLine("4)Mostrar Informacion Estudiante");
                 Console.WriteLine("0)Salir");
                 Console.WriteLine("Seleccione una opcion:");
@@ -31,16 +31,24 @@ namespace Aplicacion.Interfaz
                         try
                         {
                             Console.Clear();
-                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.ForegroundColor = ConsoleColor.DarkGreen;
                             Console.WriteLine("Registro de Estudiante");
-                            Console.WriteLine("Ingrese el nombre del estudiante1:");
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.WriteLine("Ingrese el nombre del estudiante:");
                             estudiante.Nombre = Console.ReadLine();
-                            Console.WriteLine("Ingrese el apellido del estudiante1:");
+                            Console.WriteLine("Ingrese el apellido del estudiante:");
                             estudiante.Apellido = Console.ReadLine();
-                            Console.WriteLine("Ingrese la fecha de nacimiento del estudiante1:");
+                            Console.WriteLine("Ingrese la fecha de nacimiento del estudiante:");
+                            Console.ForegroundColor = ConsoleColor.DarkYellow;
+                            Console.WriteLine("Sugerencia: Ingrese la fecha en el formato 'dd/mm/aaaa'\nEjemplo: '31/12/1987'");
+                            Console.ForegroundColor = ConsoleColor.Green;
                             estudiante.FechaNacimiento = Convert.ToDateTime(Console.ReadLine());
-                            Console.WriteLine("Ingrese la identificacion del estudiante1:");
-                            var result = gestionEstudiante.ValidarIdentificacion(Console.ReadLine());
+                            Console.WriteLine("Ingrese la identificacion del estudiante:");
+                            Console.ForegroundColor = ConsoleColor.DarkYellow;
+                            Console.WriteLine("Sugerencia: Ingrese el numero de identificacion con guiones en el formato 'xxxx-xxxx-xxxxx'");
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            string comprobacionIdentificacion = Console.ReadLine();
+                            var result = gestionEstudiante.ValidarIdentificacion(comprobacionIdentificacion);
                             if (result == false)
                             {
                                 Console.ForegroundColor = ConsoleColor.Red;
@@ -48,29 +56,36 @@ namespace Aplicacion.Interfaz
                                 Console.ReadKey();
                                 break;
                             }
-                            Console.WriteLine("Ingrese el genero del estudiante1:");
+                            estudiante.Identificacion = comprobacionIdentificacion;
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.WriteLine("Ingrese el genero del estudiante:");
+                            Console.ForegroundColor = ConsoleColor.DarkYellow;
                             Console.WriteLine("M = Masculino, F = Femenino");
-                            estudiante.Genero = Convert.ToChar(Console.ReadLine());
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            estudiante.Genero = Convert.ToChar(Console.ReadLine().ToUpper());
                             estudiante.Activo = true;
-                            Console.WriteLine("Ingrese el telefono del estudiante1:");
+                            Console.WriteLine("Ingrese el telefono del estudiante:");
+                            Console.ForegroundColor = ConsoleColor.DarkYellow;
+                            Console.WriteLine("Sugerencia: Ingrese el telefono incluyendo el numero de area, en el siguiente formato '504-xxxx-xxxx'");
+                            Console.ForegroundColor = ConsoleColor.Green;
                             estudiante.Telefono = Console.ReadLine();
-                            Console.WriteLine("Ingrese el departamento del estudiante1:");
+                            Console.WriteLine("Ingrese el departamento del estudiante:");
                             MostrarDepartamentos();
                             Console.ForegroundColor = ConsoleColor.Green;
                             estudiante.Departamento = Console.ReadLine();
-                            Console.WriteLine("Ingrese el municipio del estudiante1:");
+                            Console.WriteLine("Ingrese el municipio del estudiante:");
                             MostrarMunicipios(estudiante.Departamento);
                             Console.ForegroundColor = ConsoleColor.Green;
                             estudiante.Municipio = Console.ReadLine();
-                            Console.WriteLine("Ingrese la direccion del estudiante1:");
+                            Console.WriteLine("Ingrese la direccion del estudiante:");
                             estudiante.Direccion = Console.ReadLine();
-                            Console.WriteLine("Ingrese el correo del estudiante1:");
+                            Console.WriteLine("Ingrese el correo del estudiante:");
                             estudiante.Correo = Console.ReadLine();
-                            Console.WriteLine("Ingrese el tipo de sangre1 del estudiante1:");
+                            Console.WriteLine("Ingrese el tipo de sangre1 del estudiante:");
                             MostrarListaTipoSangre();
                             Console.ForegroundColor = ConsoleColor.Green;
                             estudiante.TipoSangre = Console.ReadLine();
-                            Console.WriteLine("Ingrese el tutor del estudiante1:");
+                            Console.WriteLine("Ingrese el tutor del estudiante:");
                             estudiante.Tutor = Console.ReadLine();
 
                             var mensajeValidacion = gestionEstudiante.ValidarEstudiante(estudiante);
@@ -80,9 +95,9 @@ namespace Aplicacion.Interfaz
                                 Console.WriteLine(mensajeValidacion);
                                 Console.ReadKey();
                                 break;
-                            }
+                            }                            
+                            gestionEstudiante.RegistrarEstudiante(estudiante);
                             Console.ForegroundColor = ConsoleColor.DarkYellow;
-                            gestionEstudiante.Registrar(estudiante);
                             Console.WriteLine("Estudiante registrado correctamente");
                             Console.ReadKey();
                         }
@@ -92,99 +107,124 @@ namespace Aplicacion.Interfaz
                             Console.WriteLine("Error: " + ex);
                             Console.ReadKey();
                         }
+                        Console.ResetColor();
+                        Console.Clear();
                         break;
                     case 2:
                         try
                         {
                             Console.Clear();
-                            Console.ForegroundColor = ConsoleColor.Green;
-                            Console.WriteLine("Actualizar Estudiante");
+                            Console.ForegroundColor = ConsoleColor.DarkGreen;
+                            Console.WriteLine("ActualizarEstudiante Estudiante");
                             pantallaGestionEstudiante.ListarEstudiantes();
                             Console.ForegroundColor = ConsoleColor.Green;
                             Console.WriteLine("Seleccione el ID del estudiante1 a actualizar:");
-                            int id = Convert.ToInt32(Console.ReadLine());
+                            int idEstudianteActualizar = Convert.ToInt32(Console.ReadLine());
 
-                            Estudiante estudianteActualizar = MostrarInformacionEstudiante(id);
+                            Estudiante estudianteActualizar = MostrarInformacionEstudiante(idEstudianteActualizar);
 
                             Console.ForegroundColor = ConsoleColor.DarkYellow;
                             Console.WriteLine("¿Desea actualizar la información de este estudiante1?");
-                            Console.WriteLine("s = Si, n = No");
-                            string respuesta = Console.ReadLine().ToLower();
-                            if (respuesta != "s") break;
-                            
-
+                            Console.ForegroundColor = ConsoleColor.DarkYellow;
+                            Console.WriteLine("1 = Si, 0 = No");
                             Console.ForegroundColor = ConsoleColor.Green;
+                            string respuesta = Console.ReadLine().ToLower();
+                            if (respuesta != "1") break;
+
+                            Console.ForegroundColor = ConsoleColor.White;
                             Console.WriteLine("Nombre registrado: " + estudianteActualizar.Nombre);
+                            Console.ForegroundColor = ConsoleColor.Green;
                             Console.WriteLine("Ingrese la corrección o actualización del nombre (dejar en blanco para mantener):");
                             string nuevoNombre = Console.ReadLine();
                             if (!string.IsNullOrEmpty(nuevoNombre)) estudianteActualizar.Nombre = nuevoNombre;
 
+                            Console.ForegroundColor = ConsoleColor.White;
                             Console.WriteLine("Apellido registrado: " + estudianteActualizar.Apellido);
+                            Console.ForegroundColor = ConsoleColor.Green;
                             Console.WriteLine("Ingrese la corrección o actualización del apellido (dejar en blanco para mantener):");
                             string nuevoApellido = Console.ReadLine();
                             if (!string.IsNullOrEmpty(nuevoApellido)) estudianteActualizar.Apellido = nuevoApellido;
 
+                            Console.ForegroundColor = ConsoleColor.White;
                             Console.WriteLine("Fecha de Nacimiento registrada: " + estudianteActualizar.FechaNacimiento);
+                            Console.ForegroundColor = ConsoleColor.Green;
                             Console.WriteLine("Ingrese la corrección o actualización de la fecha de nacimiento (dejar en blanco para mantener):");
                             string nuevaFechaNacimiento = Console.ReadLine();
                             if (!string.IsNullOrEmpty(nuevaFechaNacimiento)) estudianteActualizar.FechaNacimiento = DateTime.Parse(nuevaFechaNacimiento);
 
+                            Console.ForegroundColor = ConsoleColor.White;
                             Console.WriteLine("Identificación registrada: " + estudianteActualizar.Identificacion);
+                            Console.ForegroundColor = ConsoleColor.Green;
                             Console.WriteLine("Ingrese la corrección o actualización de la identificación (dejar en blanco para mantener):");
                             string nuevaIdentificacion = Console.ReadLine();
                             if (!string.IsNullOrEmpty(nuevaIdentificacion)) estudianteActualizar.Identificacion = nuevaIdentificacion;
 
+                            Console.ForegroundColor = ConsoleColor.White;
                             Console.WriteLine("Género registrado: " + estudianteActualizar.Genero);
+                            Console.ForegroundColor = ConsoleColor.Green;
                             Console.WriteLine("Ingrese la corrección o actualización del género \n(M = Masculino, F = Femenino, dejar en blanco para mantener):");
                             string nuevoGenero = Console.ReadLine().ToUpper();
                             if (!string.IsNullOrEmpty(nuevoGenero)) estudianteActualizar.Genero = char.Parse(nuevoGenero);
 
+                            Console.ForegroundColor = ConsoleColor.White;
                             Console.WriteLine("Teléfono registrado: " + estudianteActualizar.Telefono);
+                            Console.ForegroundColor = ConsoleColor.Green;
                             Console.WriteLine("Ingrese la corrección o actualización del teléfono (dejar en blanco para mantener):");
                             string nuevoTelefono = Console.ReadLine();
                             if (!string.IsNullOrEmpty(nuevoTelefono)) estudianteActualizar.Telefono = nuevoTelefono;
 
+                            Console.ForegroundColor = ConsoleColor.White;
                             Console.WriteLine("Departamento registrado: " + estudianteActualizar.Departamento);
                             MostrarDepartamentos();
+                            Console.ForegroundColor = ConsoleColor.Green;
                             Console.WriteLine("Ingrese la corrección o actualización del departamento (dejar en blanco para mantener):");
                             string nuevoDepartamento = Console.ReadLine();
                             if (string.IsNullOrEmpty(nuevoDepartamento)) estudianteActualizar.Departamento = ObtenerCodigoDepartamento(estudianteActualizar.Departamento).ToString();
                             if (!string.IsNullOrEmpty(nuevoDepartamento)) estudianteActualizar.Departamento = nuevoDepartamento;
 
+                            Console.ForegroundColor = ConsoleColor.White;
                             Console.WriteLine("Municipio registrado: " + estudianteActualizar.Municipio);
                             MostrarMunicipios(estudianteActualizar.Departamento);
+                            Console.ForegroundColor = ConsoleColor.Green;
                             Console.WriteLine("Ingrese la corrección o actualización del municipio (dejar en blanco para mantener):");
                             string nuevoMunicipio = Console.ReadLine();
-                            if (string.IsNullOrEmpty(nuevoMunicipio)) estudianteActualizar.Municipio = ObtenerCodigoMunicipio(estudianteActualizar.Municipio).ToString();
+                            if (string.IsNullOrEmpty(nuevoMunicipio)) estudianteActualizar.Municipio = ObtenerCodigoMunicipio(estudianteActualizar.Municipio,estudianteActualizar.Departamento).ToString();
                             if (!string.IsNullOrEmpty(nuevoMunicipio)) estudianteActualizar.Municipio = nuevoMunicipio;
 
+                            Console.ForegroundColor = ConsoleColor.White;
                             Console.WriteLine("Dirección registrada: " + estudianteActualizar.Direccion);
+                            Console.ForegroundColor = ConsoleColor.Green;
                             Console.WriteLine("Ingrese la corrección o actualización de la dirección (dejar en blanco para mantener):");
                             string nuevaDireccion = Console.ReadLine();
                             if (!string.IsNullOrEmpty(nuevaDireccion)) estudianteActualizar.Direccion = nuevaDireccion;
 
+                            Console.ForegroundColor = ConsoleColor.White;
                             Console.WriteLine("Correo registrado: " + estudianteActualizar.Correo);
+                            Console.ForegroundColor = ConsoleColor.Green;
                             Console.WriteLine("Ingrese la corrección o actualización del correo (dejar en blanco para mantener):");
                             string nuevoCorreo = Console.ReadLine();
                             if (!string.IsNullOrEmpty(nuevoCorreo)) estudianteActualizar.Correo = nuevoCorreo;
 
+                            Console.ForegroundColor = ConsoleColor.White;
                             Console.WriteLine("Tipo de Sangre registrado: " + estudianteActualizar.TipoSangre);
                             MostrarListaTipoSangre();
+                            Console.ForegroundColor = ConsoleColor.Green;
                             Console.WriteLine("Ingrese la corrección o actualización del tipo de sangre1 (dejar en blanco para mantener):");
                             string nuevoTipoSangre = Console.ReadLine();
                             if (string.IsNullOrEmpty(nuevoTipoSangre)) estudianteActualizar.TipoSangre = ObtenerCodigoTipoSangre(estudianteActualizar.TipoSangre).ToString();
                             if (!string.IsNullOrEmpty(nuevoTipoSangre)) estudianteActualizar.TipoSangre = nuevoTipoSangre;
 
+                            Console.ForegroundColor = ConsoleColor.White;
                             Console.WriteLine("Tutor registrado: " + estudianteActualizar.Tutor);
+                            Console.ForegroundColor = ConsoleColor.Green;
                             Console.WriteLine("Ingrese la corrección o actualización del tutor (dejar en blanco para mantener):");
                             string nuevoTutor = Console.ReadLine();
                             if (!string.IsNullOrEmpty(nuevoTutor)) estudianteActualizar.Tutor = nuevoTutor;
 
-                            gestionEstudiante.Actualizar(estudianteActualizar, id);
+                            gestionEstudiante.ActualizarEstudiante(estudianteActualizar, idEstudianteActualizar);
 
                             Console.ForegroundColor = ConsoleColor.Green;
                             Console.WriteLine("Estudiante actualizado correctamente.");
-                            Console.ResetColor();
                             Console.ReadKey();
                         }
                         catch (Exception ex)
@@ -193,20 +233,24 @@ namespace Aplicacion.Interfaz
                             Console.WriteLine("Error: " + ex);
                             Console.ReadKey();
                         }
+                        Console.ResetColor();
+                        Console.Clear();
                         break;
                     case 3:
                         PantallaGestionHabilitacionEstudiante.MenuHabilitacionEstudiante();
                         break;
                     case 4:
                         Console.Clear();
-                        Console.ForegroundColor = ConsoleColor.Green;
                         pantallaGestionEstudiante.ListarEstudiantes();
                         Console.ForegroundColor = ConsoleColor.Green;
                         Console.WriteLine("Seleccione el estudiante1 del que desea ver la información:");
+                        Console.ForegroundColor = ConsoleColor.DarkYellow;
                         Console.WriteLine("Nota: Seleccione el ID");
                         int idEstudiante = Convert.ToInt32(Console.ReadLine());
                         MostrarInformacionEstudiante(idEstudiante);
                         Console.ReadKey();
+                        Console.ResetColor();
+                        Console.Clear();
                         break;
                     case 0:
                         continuar = false;
@@ -215,8 +259,10 @@ namespace Aplicacion.Interfaz
                         Console.WriteLine("Opcion no valida");
                         break;
                 }
+                Console.ResetColor();
+                Console.Clear();
             } while (continuar);
-            Console.ResetColor();
+            Console.Clear();
         }
         public void ListarEstudiantes()
         {
@@ -224,37 +270,33 @@ namespace Aplicacion.Interfaz
             List<Estudiante> listaEstudiantes = new List<Estudiante>();
             listaEstudiantes = gestionEstudiante.ObtenerListaEstudiantes();
 
-            // Imprimir la cabecera de la tabla
-            Console.Write("--------------------------------------------------------------");
-            Console.WriteLine(string.Format("\n{0,-3} | {1,-10} | {2,-10} | {3,-10} | {4,-15} |", "Id", "Nombre", "Apellido", "Natalicio", "Identificacion"));
-            Console.WriteLine("--------------------------------------------------------------");
+            Console.Write("--------------------------------------------------------------------------------");
+            Console.WriteLine(string.Format("\n  {0,-2} |                {1,-25} | {2,-10} | {3,-15} |", "Id", "Estudiante", "Natalicio", "Identificacion"));
+            Console.WriteLine("--------------------------------------------------------------------------------");
 
-            // Imprimir los datos
             foreach (var estudiante1 in listaEstudiantes)
             {
-                Console.WriteLine(string.Format("{0,-3} | {1,-10} | {2,-10} | {3,-10} | {4,-15} |", estudiante1.Id, estudiante1.Nombre, estudiante1.Apellido, estudiante1.FechaNacimiento.ToString().Remove(10), estudiante1.Identificacion));
+                Console.WriteLine(string.Format(" {0,-3} | {1,-40} | {2,-10} | {3,-15} |", estudiante1.Id, estudiante1.Nombre + " " + estudiante1.Apellido, estudiante1.FechaNacimiento.ToString().Remove(10), estudiante1.Identificacion));
             }
-            Console.WriteLine("--------------------------------------------------------------");
+            Console.WriteLine("--------------------------------------------------------------------------------");
+            Console.ResetColor();
         }
         public static void MostrarDepartamentos()
         {
             Console.ForegroundColor = ConsoleColor.DarkGreen;
-            List<Departamento> departamentos = new List<Departamento>();
-            departamentos = gestionEstudiante.ObtenerListaDepartamentos();
+                List<Departamento> departamentos = new List<Departamento>();
+                departamentos = gestionEstudiante.ObtenerListaDepartamentos();
 
-            // Imprimir la cabecera de la tabla
-            Console.Write("--------------------");
-            Console.WriteLine(string.Format("\n{0,-5} | {1,-10}|", "Id", "Departamento"));
-            Console.WriteLine("--------------------");
+                Console.Write("---------------------------------");
+                Console.WriteLine(string.Format("\n {0,-2} | {1,-25} |", "Id", "Departamento"));
+                Console.WriteLine("---------------------------------");
 
-            // Imprimir los datos
-            foreach (var departamento1 in departamentos)
-            {
-                Console.WriteLine(string.Format("{0,-5} | {1,-10} |", departamento1.Id, departamento1.DepartamentoNombre));
-            }
-            Console.WriteLine("--------------------");
-
-            Console.ResetColor();
+                foreach (var departamento1 in departamentos)
+                {
+                    Console.WriteLine(string.Format("{0,-3} | {1,-25} |", departamento1.Id, departamento1.DepartamentoNombre));
+                }
+                Console.WriteLine("---------------------------------");
+                Console.ResetColor();
         }
         public static void MostrarMunicipios(string idDepartamento)
         {
@@ -262,21 +304,18 @@ namespace Aplicacion.Interfaz
             List<Municipio> municipios = new List<Municipio>();
             municipios = gestionEstudiante.ObtenerListaMunicipios(idDepartamento);
 
-            // Imprimir la cabecera de la tabla
-            Console.Write("--------------------");
-            Console.WriteLine(string.Format("\n{0,-5} | {1,-10}|", "Id", "Municipio"));
-            Console.WriteLine("--------------------");
+            Console.Write("---------------------------------");
+            Console.WriteLine(string.Format("\n {0,-2} | {1,-25} |", "Id", "Municipio"));
+            Console.WriteLine("---------------------------------");
 
-            // Imprimir los datos
             foreach (var municipio1 in municipios)
             {
-                Console.WriteLine(string.Format("{0,-5} | {1,-10} |", municipio1.Id, municipio1.MunicipioNombre));
+                Console.WriteLine(string.Format("{0,-3} | {1,-25} |", municipio1.Id, municipio1.MunicipioNombre));
             }
-            Console.WriteLine("--------------------");
-
+            Console.WriteLine("---------------------------------");
             Console.ResetColor();
         }
-        public static Estudiante MostrarInformacionEstudiante(int id)   
+        public static Estudiante MostrarInformacionEstudiante(int id)
         {
             Estudiante estudiante2 = new Estudiante();
             estudiante2 = gestionEstudiante.ObtenerInformacionEstudiante(id);
@@ -287,10 +326,10 @@ namespace Aplicacion.Interfaz
             Console.WriteLine("Id: " + estudiante2.Id);
             Console.WriteLine("Nombre: " + estudiante2.Nombre);
             Console.WriteLine("Apellido: " + estudiante2.Apellido);
-            Console.WriteLine("Fecha de Nacimiento: " + estudiante2.FechaNacimiento);
+            Console.WriteLine("Fecha de Nacimiento: " + estudiante2.FechaNacimiento.ToString().Remove(10));
             Console.WriteLine("Identificacion: " + estudiante2.Identificacion);
             Console.WriteLine("Genero: " + estudiante2.Genero);
-            Console.WriteLine("Activo: " + (estudiante2.Activo ? "Si":"No"));
+            Console.WriteLine("Activo: " + (estudiante2.Activo ? "Si" : "No"));
             Console.WriteLine("Telefono: " + estudiante2.Telefono);
             Console.WriteLine("Departamento: " + estudiante2.Departamento);
             Console.WriteLine("Municipio: " + estudiante2.Municipio);
@@ -306,147 +345,58 @@ namespace Aplicacion.Interfaz
             List<TipoSangre> tipoSangres = new List<TipoSangre>();
             tipoSangres = gestionEstudiante.ObtenerListaTipoSangre();
 
-            // Imprimir la cabecera de la tabla
             Console.Write("--------------------");
-            Console.WriteLine(string.Format("\n{0,-5} | {1,-10}|", "Id", "Tipo Sangre"));
+            Console.WriteLine(string.Format("\n{0,-3} | {1,-10}|", "Id", "Tipo Sangre"));
             Console.WriteLine("--------------------");
 
-            // Imprimir los datos
             foreach (var sangre1 in tipoSangres)
             {
-                Console.WriteLine(string.Format("{0,-5} | {1,-10} |", sangre1.Id, sangre1.SangreNombre));
+                Console.WriteLine(string.Format("{0,-3} | {1,-10} |", sangre1.Id, sangre1.SangreNombre));
             }
             Console.WriteLine("--------------------");
-
             Console.ResetColor();
         }
         public static int ObtenerCodigoDepartamento(string dep)
         {
-            switch (dep)
+            gestionEstudiante = new GestionEstudiante();
+            List<Departamento> departamentos = new List<Departamento>();
+            departamentos = gestionEstudiante.ObtenerListaDepartamentos();
+            foreach (var departamento1 in departamentos)
             {
-                case "Atlántida":
-                    return 1;
-                case "Choluteca":
-                    return 2;
-                case "Colón":
-                    return 3;
-                case "Comayagua":
-                    return 4;
-                case "Copán":
-                    return 5;
-                case "Cortés":
-                    return 6;
-                case "El Paraíso":
-                    return 7;
-                case "Francisco Morazán":
-                    return 8;
-                case "Gracias a Dios":
-                    return 9;
-                case "Intibucá":
-                    return 10;
-                case "Islas de la Bahía":
-                    return 11;
-                case "La Paz":
-                    return 12;
-                case "Lempira":
-                    return 13;
-                case "Ocotepeque":
-                    return 14;
-                case "Olancho":
-                    return 15;
-                case "Santa Bárbara":
-                    return 16;
-                case "Valle":
-                    return 17;
-                case "Yoro":
-                    return 18;
-                default:
-                    return 0;
+                if (departamento1.DepartamentoNombre == dep)
+                {
+                    return departamento1.Id;
+                }
             }
+            return 0;
         }
         public static int ObtenerCodigoTipoSangre(string tipo)
         {
-            switch (tipo)
+            gestionEstudiante = new GestionEstudiante();
+            List<TipoSangre> tipoSangres = new List<TipoSangre>();
+            tipoSangres = gestionEstudiante.ObtenerListaTipoSangre();
+            foreach (var sangre1 in tipoSangres)
             {
-                case "A+":
-                    return 1;
-                case "A-":
-                    return 2;
-                case "B+":
-                    return 3;
-                case "B-":
-                    return 4;
-                case "AB+":
-                    return 5;
-                case "AB-":
-                    return 6;
-                case "O+":
-                    return 7;
-                case "O-":
-                    return 8;
-                default:
-                    return 0;
+                if (sangre1.SangreNombre == tipo)
+                {
+                    return sangre1.Id;
+                }
             }
+            return 0;
         }
-        public static int ObtenerCodigoMunicipio(string muni)
+        public static int ObtenerCodigoMunicipio(string municipio,string departamento)
         {
-            switch (muni)
+            gestionEstudiante = new GestionEstudiante();
+            List<Municipio> municipios = new List<Municipio>();
+            municipios = gestionEstudiante.ObtenerListaMunicipios(departamento);
+            foreach (var municipio1 in municipios)
             {
-                case "La Ceiba":
-                    return 1;
-                case "Tela":
-                    return 2;
-                case "Choluteca":
-                    return 3;
-                case "San Marcos de Colón":
-                    return 4;
-                case "Trujillo":
-                    return 5;
-                case "Tocoa":
-                    return 6;
-                case "Comayagua":
-                    return 7;
-                case "Siguatepeque":
-                    return 8;
-                case "Santa Rosa de Copán":
-                    return 9;
-                case "La Entrada":
-                    return 10;
-                case "San Pedro Sula":
-                    return 11;
-                case "Puerto Cortés":
-                    return 12;
-                case "Danlí":
-                    return 13;
-                case "Yuscarán":
-                    return 14;
-                case "Tegucigalpa":
-                    return 15;
-                case "Valle de Ángeles":
-                    return 16;
-                case "Puerto Lempira":
-                    return 17;
-                case "La Esperanza":
-                    return 18;
-                case "Roatán":
-                    return 19;
-                case "La Paz":
-                    return 20;
-                case "Gracias":
-                    return 21;
-                case "Nueva Ocotepeque":
-                    return 22;
-                case "Juticalpa":
-                    return 23;
-                case "Santa Bárbara":
-                    return 24;
-                case "Nacaome":
-                    return 25;
-                case "Yoro":
-                    return 26;
-                default:
-                    return 0; // Si el municipio no se encuentra en la lista, retornar 0 o algún valor que indique no encontrado
+                if (municipio1.MunicipioNombre == municipio)
+                {
+                    return municipio1.Id;
+                }
             }
+            return 0;
         }
     }
 }

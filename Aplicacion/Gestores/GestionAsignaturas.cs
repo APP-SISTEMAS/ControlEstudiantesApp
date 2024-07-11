@@ -12,15 +12,13 @@ namespace Aplicacion.Gestores
         {
             _database = new Database();
         }
-        public bool Agregar(Asignatura asignatura)
+        public bool RegistrarAsignatura(Asignatura asignatura)
         {
             var result = false;
             try
             {
-                if (_database.Context.State != System.Data.ConnectionState.Open)
-                {
-                    _database.Context.Open();
-                }
+                if (_database.Context.State != System.Data.ConnectionState.Open) _database.Context.Open();
+
                 var command = _database.Context.CreateCommand();
                 command.CommandText = "insert into Asignatura(nombre,activo) values(@nombre,@activo)";
                 command.Parameters.AddWithValue("@nombre", asignatura.AsignaturaNombre);
@@ -35,15 +33,13 @@ namespace Aplicacion.Gestores
             }
             return result;
         }
-        public bool Modificar(Asignatura asignatura)
+        public bool ModificarAsignatura(Asignatura asignatura)
         {
             var result = false;
             try
             {
-                if (_database.Context.State != System.Data.ConnectionState.Open)
-                {
-                    _database.Context.Open();
-                }
+                if (_database.Context.State != System.Data.ConnectionState.Open) _database.Context.Open();
+
                 var command = _database.Context.CreateCommand();
                 command.CommandText = "update Asignatura set nombre = @nombre where id = @id";
                 command.Parameters.AddWithValue("@nombre", asignatura.AsignaturaNombre);
@@ -58,15 +54,13 @@ namespace Aplicacion.Gestores
             }
             return result;
         }
-        public bool Deshabilitar(int id)
+        public bool DeshabilitarAsignatura(int id)
         {
             var result = false;
             try
             {
-                if (_database.Context.State != System.Data.ConnectionState.Open)
-                {
-                    _database.Context.Open();
-                }
+                if (_database.Context.State != System.Data.ConnectionState.Open) _database.Context.Open();
+
                 var command = _database.Context.CreateCommand();
                 command.CommandText = "update Asignatura set activo = 0 where id = @id";
                 command.Parameters.AddWithValue("@id", id);
@@ -80,15 +74,13 @@ namespace Aplicacion.Gestores
             }
             return result;
         }
-        public bool Habilitar(int id)
+        public bool HabilitarAsignatura(int id)
         {
             var result = false;
             try
             {
-                if (_database.Context.State != System.Data.ConnectionState.Open)
-                {
-                    _database.Context.Open();
-                }
+                if (_database.Context.State != System.Data.ConnectionState.Open) _database.Context.Open();
+
                 var command = _database.Context.CreateCommand();
                 command.CommandText = "update Asignatura set activo = 1 where id = @id";
                 command.Parameters.AddWithValue("@id", id);
@@ -102,18 +94,23 @@ namespace Aplicacion.Gestores
             }
             return result;
         }
-        public bool VerificarSiHayNotas(int id)
+        public string ValidarAsignatura(Asignatura asignatura)
+        {
+            var mensajeValidacion = "";
+            if (string.IsNullOrEmpty(asignatura.AsignaturaNombre)) mensajeValidacion += "La asignatura requiere un nombre";
+
+            return mensajeValidacion;
+        }
+        public bool VerificarSiHayNotas(int idAsignatura)
         {
             var result = false;
             try
             {
-                if (_database.Context.State != System.Data.ConnectionState.Open)
-                {
-                    _database.Context.Open();
-                }
+                if (_database.Context.State != System.Data.ConnectionState.Open) _database.Context.Open();
+
                 var command = _database.Context.CreateCommand();
-                command.CommandText = "select count(1) from Notas where id_asignatura = @id";
-                command.Parameters.AddWithValue("@id", id);
+                command.CommandText = "select count(1) from Notas where id_asignatura = @idAsignatura";
+                command.Parameters.AddWithValue("@idAsignatura", idAsignatura);
                 var count = (int)command.ExecuteScalar();
                 if (count > 0) return result = true;
                 _database.Context.Close();
@@ -126,24 +123,49 @@ namespace Aplicacion.Gestores
         }
         public List<Asignatura> ListarAsignaturas()
         {
-            if (_database.Context.State != System.Data.ConnectionState.Open)
+            try
             {
-                _database.Context.Open();
+                if (_database.Context.State != System.Data.ConnectionState.Open) _database.Context.Open();
+
+                var command = _database.Context.CreateCommand();
+                command.CommandText = "select id,nombre,activo from Asignatura";
+                var reader = command.ExecuteReader();
+                List<Asignatura> asignaturas = new List<Asignatura>();
+                foreach (var item in reader)
+                {
+                    Asignatura asignatura = new Asignatura();
+                    asignatura.Id = (int)reader["id"];
+                    asignatura.AsignaturaNombre = reader["nombre"].ToString();
+                    asignatura.Activo = (bool)reader["activo"];
+                    asignaturas.Add(asignatura);
+                }
+                _database.Context.Close();
+                return asignaturas;
             }
-            var command = _database.Context.CreateCommand();
-            command.CommandText = "select id,nombre,activo from Asignatura";
-            var reader = command.ExecuteReader();
-            List<Asignatura> asignaturas = new List<Asignatura>();
-            foreach (var item in reader)
+            catch (Exception ex)
             {
-                Asignatura asignatura = new Asignatura();
-                asignatura.Id = (int)reader["id"];
-                asignatura.AsignaturaNombre = reader["nombre"].ToString();
-                asignatura.Activo = (bool)reader["activo"];
-                asignaturas.Add(asignatura);
+                throw new Exception("Error: " + ex);
             }
-            _database.Context.Close();
-            return asignaturas;
+        }
+        public bool VerificarSiClaseExiste(string nombre)
+        {
+            var result = false;
+            try
+            {
+                if (_database.Context.State != System.Data.ConnectionState.Open) _database.Context.Open();
+
+                var command = _database.Context.CreateCommand();
+                command.CommandText = "select count(1) from Asignatura where nombre = @nombre";
+                command.Parameters.AddWithValue("@nombre", nombre);
+                var count = (int)command.ExecuteScalar();
+                if (count > 0) return result = true;
+                _database.Context.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error: " + ex);
+            }
+            return result;
         }
     }
 }
