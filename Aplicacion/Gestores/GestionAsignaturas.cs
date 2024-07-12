@@ -167,5 +167,25 @@ namespace Aplicacion.Gestores
             }
             return result;
         }
+        public bool ExisteIdAsignatura(int id)
+        {
+            var result = false;
+            try
+            {
+                if (_database.Context.State != System.Data.ConnectionState.Open) _database.Context.Open();
+
+                var command = _database.Context.CreateCommand();
+                command.CommandText = "select count(1) from Asignatura where id = @id and activo=1";
+                command.Parameters.AddWithValue("@id", id);
+                var count = (int)command.ExecuteScalar();
+                if (count > 0) return result = true;
+                _database.Context.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error: " + ex);
+            }
+            return result;
+        }
     }
 }

@@ -39,7 +39,7 @@ namespace Aplicacion.Interfaz
                             Console.WriteLine("Ingrese el nombre de la Asignatura:");
                             asignatura.AsignaturaNombre = Console.ReadLine();
                             var result = gestionAsignaturas.VerificarSiClaseExiste(asignatura.AsignaturaNombre);
-                            if (!result)
+                            if (result)
                             {
                                 Console.ForegroundColor = ConsoleColor.Red;
                                 Console.WriteLine("Esta clase ya existe");
@@ -89,6 +89,7 @@ namespace Aplicacion.Interfaz
                             Console.WriteLine("Ingrese el Id de la Asignatura:");
                             int idAsignatura = Convert.ToInt32(Console.ReadLine());
                             asignatura.Id = idAsignatura;
+                            Console.Clear();
                             var result = gestionAsignaturas.VerificarSiHayNotas(idAsignatura);
                             if (result)
                             {
@@ -125,6 +126,7 @@ namespace Aplicacion.Interfaz
                             Console.ForegroundColor = ConsoleColor.Green;
                             Console.WriteLine("Ingrese el Id de la Asignatura:");
                             int idAsignatura = Convert.ToInt32(Console.ReadLine());
+                            Console.Clear();
                             gestionAsignaturas.DeshabilitarAsignatura(idAsignatura);
                             Console.ForegroundColor = ConsoleColor.DarkYellow;
                             Console.WriteLine("Asignatura deshabilitada correctamente");
@@ -149,6 +151,7 @@ namespace Aplicacion.Interfaz
                             pantallaGestionAsignatura.ListarAsignaturas();
                             Console.WriteLine("Ingrese el Id de la Asignatura:");
                             int idAsignatura = Convert.ToInt32(Console.ReadLine());
+                            Console.Clear();
                             gestionAsignaturas.HabilitarAsignatura(idAsignatura);
                             Console.ForegroundColor = ConsoleColor.DarkYellow;
                             Console.WriteLine("Asignatura habilitada correctamente");

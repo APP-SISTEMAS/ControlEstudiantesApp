@@ -88,6 +88,7 @@ namespace Aplicacion.Interfaz
                             Console.WriteLine("Ingrese el tutor del estudiante:");
                             estudiante.Tutor = Console.ReadLine();
 
+                            Console.Clear();
                             var mensajeValidacion = gestionEstudiante.ValidarEstudiante(estudiante);
                             if (mensajeValidacion != "")
                             {
@@ -120,6 +121,7 @@ namespace Aplicacion.Interfaz
                             Console.ForegroundColor = ConsoleColor.Green;
                             Console.WriteLine("Seleccione el ID del estudiante1 a actualizar:");
                             int idEstudianteActualizar = Convert.ToInt32(Console.ReadLine());
+                            Console.Clear();
 
                             Estudiante estudianteActualizar = MostrarInformacionEstudiante(idEstudianteActualizar);
 
@@ -129,6 +131,7 @@ namespace Aplicacion.Interfaz
                             Console.WriteLine("1 = Si, 0 = No");
                             Console.ForegroundColor = ConsoleColor.Green;
                             string respuesta = Console.ReadLine().ToLower();
+                            Console.Clear();
                             if (respuesta != "1") break;
 
                             Console.ForegroundColor = ConsoleColor.White;
@@ -221,6 +224,7 @@ namespace Aplicacion.Interfaz
                             string nuevoTutor = Console.ReadLine();
                             if (!string.IsNullOrEmpty(nuevoTutor)) estudianteActualizar.Tutor = nuevoTutor;
 
+                            Console.Clear();
                             gestionEstudiante.ActualizarEstudiante(estudianteActualizar, idEstudianteActualizar);
 
                             Console.ForegroundColor = ConsoleColor.Green;
@@ -247,6 +251,7 @@ namespace Aplicacion.Interfaz
                         Console.ForegroundColor = ConsoleColor.DarkYellow;
                         Console.WriteLine("Nota: Seleccione el ID");
                         int idEstudiante = Convert.ToInt32(Console.ReadLine());
+                        Console.Clear();
                         MostrarInformacionEstudiante(idEstudiante);
                         Console.ReadKey();
                         Console.ResetColor();

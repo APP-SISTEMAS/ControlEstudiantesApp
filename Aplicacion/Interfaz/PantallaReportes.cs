@@ -11,84 +11,161 @@ namespace Aplicacion.Interfaz
         public static PantallaGestionEstudiante pantallaGestionEstudiante = new PantallaGestionEstudiante();
         public static GestionNotas gestionNotas = new GestionNotas();
         public static GestionAsignaturas gestionAsignaturas = new GestionAsignaturas();
+        public static GestionEstudiante gestionEstudiante = new GestionEstudiante();
         public static void MenuReporte()
         {
-            bool continuar = true;
-            do
+            try
             {
-                Console.Clear();
-                Console.ForegroundColor = ConsoleColor.DarkCyan;
-                Console.WriteLine("Gestion de Reportes de Notas");
-                Console.WriteLine("1)Consolidado de Notas Generales");
-                Console.WriteLine("2)Mostrar Notas por estudiante");
-                Console.WriteLine("3)Mostrar Notas por clase");
-                Console.WriteLine("0)Salir");
-                Console.WriteLine("Seleccione una opcion:");
-                int numeroOpcion = Convert.ToInt32(Console.ReadLine());
-                Console.ForegroundColor = ConsoleColor.Green;
-                switch (numeroOpcion)
+                bool continuar = true;
+                var result = false;
+                do
                 {
-                    case 1:
-                        Console.Clear();
-                        MostrarPromedioGeneralEstudiante();
-                        Console.ReadKey();
-                        Console.Clear();
-                        break;
-                    case 2:
-                        Console.Clear();
-                        pantallaGestionEstudiante.ListarEstudiantes();
-                        Console.ForegroundColor = ConsoleColor.Green;
-                        Console.WriteLine("Seleccione el estudiante del que desea ver sus notas:");
-                        Console.WriteLine("Sugerencia: Seleccione el ID");
-                        int idEstudiante = Convert.ToInt32(Console.ReadLine());
-                        var result = gestionNotas.VerificarSiHayNotasPorAlumno(idEstudiante);
-                        if (!result)
-                        {
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine("Este estudiante no tiene notas registradas");
+                    Console.Clear();
+                    Console.ForegroundColor = ConsoleColor.DarkCyan;
+                    Console.WriteLine("\tPantalla de Gestion de Reportes de Notas");
+                    Console.WriteLine("===================================================");
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    Console.WriteLine("\n1)Consolidado de Notas Generales");
+                    Console.WriteLine("2)Mostrar Notas por estudiante");
+                    Console.WriteLine("3)Mostrar Notas por clase");
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine("\n===================================================");
+                    Console.WriteLine("0)Salir a la pantalla anterior");
+                    Console.ForegroundColor = ConsoleColor.DarkYellow;
+                    Console.WriteLine("\nSeleccione una opcion:");
+                    int numeroOpcion = Convert.ToInt32(Console.ReadLine());
+                    switch (numeroOpcion)
+                    {
+                        case 1:
+                            Console.Clear();
+                            MostrarPromedioGeneralEstudiante();
                             Console.ReadKey();
-                            Console.ResetColor();
                             Console.Clear();
                             break;
-                        }
-                        MostrarNotasPorEstudiante(idEstudiante);
-                        Console.ReadKey();
-                        Console.Clear();
-                        break;
-                    case 3:
-                        Console.Clear();                        
-                        pantallaGestionAsignatura.ListarAsignaturas();
-                        Console.ForegroundColor = ConsoleColor.Green;
-                        Console.WriteLine("Seleccione la asignatura de la que desea ver sus notas:");
-                        Console.ForegroundColor = ConsoleColor.DarkYellow;
-                        Console.WriteLine("Sugerencia: Seleccione el ID");
-                        Console.ForegroundColor = ConsoleColor.Green;
-                        int idAsignatura = Convert.ToInt32(Console.ReadLine());
-                        result = gestionNotas.VerificarSiHayNotasPorClase(idAsignatura);
-                        if (!result)
-                        {
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine("Este estudiante no tiene notas registradas");
-                            Console.ReadKey();
-                            Console.ResetColor();
-                            Console.Clear();
+                        case 2:
+                            try
+                            {
+                                Console.Clear();
+                                pantallaGestionEstudiante.ListarEstudiantes();
+                                Console.ForegroundColor = ConsoleColor.Green;
+                                Console.WriteLine("Seleccione el estudiante del que desea ver sus notas:");
+                                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                                Console.WriteLine("Sugerencia: Seleccione el ID");
+                                Console.ForegroundColor = ConsoleColor.Green;
+                                int idEstudiante = Convert.ToInt32(Console.ReadLine());
+                                Console.Clear();
+                                result = gestionEstudiante.ExisteIdEstudiante(idEstudiante);
+                                if (!result)
+                                {
+                                    Console.ForegroundColor = ConsoleColor.Red;
+                                    Console.WriteLine("Este estudiante no es valido");
+                                    Console.ReadKey();
+                                    break;
+                                }
+                                result = gestionNotas.VerificarSiHayNotasPorAlumno(idEstudiante);
+                                if (!result)
+                                {
+                                    Console.ForegroundColor = ConsoleColor.Red;
+                                    Console.WriteLine("Este estudiante no tiene notas registradas");
+                                    Console.ReadKey();
+                                    break;
+                                }
+                                MostrarNotasPorEstudiante(idEstudiante);
+                                Console.ReadKey();
+                            }
+                            catch (FormatException)
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("Error: Ingrese un valor numerico");
+                                Console.ReadKey();
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("Error: " + ex.Message);
+                                Console.ReadKey();
+                            }
+                            finally
+                            {
+                                Console.ResetColor();
+                                Console.Clear();
+                            }
                             break;
-                        }
-                        MostrarNotasPorClase(idAsignatura);
-                        Console.ReadKey();
-                        Console.Clear();
-                        break;
-                    case 0:
-                        continuar = false;
-                        break;
-                    default:
-                        Console.WriteLine("Opcion no valida");
-                        break;
-                }
-                Console.Clear();
+                        case 3:
+                            try
+                            {
+                                Console.Clear();
+                                pantallaGestionAsignatura.ListarAsignaturas();
+                                Console.ForegroundColor = ConsoleColor.Green;
+                                Console.WriteLine("Seleccione la asignatura de la que desea ver las notas:");
+                                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                                Console.WriteLine("Sugerencia: Seleccione el ID");
+                                Console.ForegroundColor = ConsoleColor.Green;
+                                int idAsignatura = Convert.ToInt32(Console.ReadLine());
+                                Console.Clear();
+                                result = gestionAsignaturas.ExisteIdAsignatura(idAsignatura);
+                                if (!result)
+                                {
+                                    Console.ForegroundColor = ConsoleColor.Red;
+                                    Console.WriteLine("Esta asignatura no es valida");
+                                    Console.ReadKey();
+                                    break;
+                                }
+                                result = gestionNotas.VerificarSiHayNotasPorClase(idAsignatura);
+                                if (!result)
+                                {
+                                    Console.ForegroundColor = ConsoleColor.Red;
+                                    Console.WriteLine("Esta asignatura no tiene notas registradas");
+                                    Console.ReadKey();
+                                    break;
+                                }
+                                MostrarNotasPorClase(idAsignatura);
+                                Console.ReadKey();
+                            }
+                            catch (FormatException)
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("Error: Ingrese un valor numerico");
+                                Console.ReadKey();
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("Error: " + ex.Message);
+                                Console.ReadKey();
+                            }
+                            finally
+                            {
+                                Console.ResetColor();
+                                Console.Clear();
+                            }
+                            break;
+                        case 0:
+                            continuar = false;
+                            break;
+                        default:
+                            Console.WriteLine("Opcion no valida");
+                            break;
+                    }
+                } while (continuar);
+            }
+            catch (FormatException)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Error: Ingrese un valor numerico");
+                Console.ReadKey();
+            }
+            catch (Exception ex)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Error: " + ex.Message);
+                Console.ReadKey();
+            }
+            finally
+            {
                 Console.ResetColor();
-            } while (continuar);
-            Console.Clear();
+                Console.Clear();
+            }
         }
         public static void MostrarNotasPorEstudiante(int idEstudiante)
         {

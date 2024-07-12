@@ -39,6 +39,33 @@ namespace Aplicacion.Gestores
             }
             return result;
         }
+        public bool ValidarIngresoNotaClaseActiva(int idEstudiante, int idAsignatura)
+        {
+            var result = false;
+            try
+            {
+                if (_database.Context.State != ConnectionState.Open) _database.Context.Open();
+
+                var command = _database.Context.CreateCommand();
+                command.CommandText = "SELECT activo FROM Asignatura WHERE Id = @Id";
+                command.Parameters.AddWithValue("@Id", idAsignatura);
+                var activo = (bool)command.ExecuteScalar();
+                if (activo)
+                {
+                    command.CommandText = "SELECT COUNT(1) FROM Notas WHERE Id_Estudiante = @Id_Estudiante AND Id_Asignatura = @Id_Asignatura";
+                    command.Parameters.AddWithValue("@Id_Estudiante", idEstudiante);
+                    command.Parameters.AddWithValue("@Id_Asignatura", idAsignatura);
+                    var count = (int)command.ExecuteScalar();
+                    if (count == 0) return result = true;
+                }
+                _database.Context.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error: " + ex.Message);
+            }
+            return result;
+        }
         public void CalcularPromedioPorClase(Nota nota)
         {
             if (_database.Context.State != ConnectionState.Open) _database.Context.Open();
@@ -68,7 +95,7 @@ namespace Aplicacion.Gestores
             }
             _database.Context.Close();
         }
-        public bool ActualizarNota(Nota nota, int idEstudiante, int idAsignatura)
+        public bool ActualizarNota(Nota nota)
         {
             var result = false;
             try
@@ -81,8 +108,8 @@ namespace Aplicacion.Gestores
                 command.Parameters.AddWithValue("@Nota2", nota.Nota2);
                 command.Parameters.AddWithValue("@Nota3", nota.Nota3);
                 command.Parameters.AddWithValue("@Nota4", nota.Nota4);
-                command.Parameters.AddWithValue("@Id_Estudiante", idEstudiante);
-                command.Parameters.AddWithValue("@Id_Asignatura", idAsignatura);
+                command.Parameters.AddWithValue("@Id_Estudiante", nota.IdEstudiante);
+                command.Parameters.AddWithValue("@Id_Asignatura", nota.IdAsignatura);
                 command.ExecuteNonQuery();
                 CalcularPromedioPorClase(nota);
                 result = true;
@@ -241,11 +268,14 @@ namespace Aplicacion.Gestores
                 command.Parameters.AddWithValue("@idEstudiante", idEstudiante);
                 var count = (int)command.ExecuteScalar();
                 if (count > 0) return result = true;
-                _database.Context.Close();
             }
             catch (Exception ex)
             {
                 throw new Exception("Error: " + ex);
+            }
+            finally
+            {
+                if (_database.Context.State != System.Data.ConnectionState.Closed) _database.Context.Close();                
             }
             return result;
         }
