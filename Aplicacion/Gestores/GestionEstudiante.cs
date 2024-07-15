@@ -3,7 +3,6 @@ using Aplicacion.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Text.RegularExpressions;
 
 namespace Aplicacion.Gestores
 {
@@ -23,14 +22,7 @@ namespace Aplicacion.Gestores
 
             if (estudiante.FechaNacimiento == null) mensajeValidacion += "El campo fecha de nacimiento es requerido\n";
 
-            if (string.IsNullOrEmpty(estudiante.Identificacion))
-            {
-                mensajeValidacion += "El campo identificacion es requerido\n";
-            }
-            else if (!Regex.IsMatch(estudiante.Identificacion, @"^\d{4}-\d{4}-\d{5}$"))
-            {
-                mensajeValidacion += "El campo identificación debe tener el formato xxxx-xxxx-xxxxx\n";
-            }
+            if (string.IsNullOrEmpty(estudiante.Identificacion)) mensajeValidacion += "El campo identificacion es requerido\n";
 
             if (string.IsNullOrEmpty(estudiante.Genero.ToString())) mensajeValidacion += "El campo genero es requerido\n";
 
@@ -247,6 +239,66 @@ namespace Aplicacion.Gestores
 
                 var command = _database.Context.CreateCommand();
                 command.CommandText = "SELECT COUNT(1) FROM Estudiante WHERE id = @id and activo=1";
+                command.Parameters.AddWithValue("@id", id);
+                var count = (int)command.ExecuteScalar();
+                if (count > 0) return result = true;
+                _database.Context.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error: " + ex);
+            }
+            return result;
+        }
+        public bool ExisteIdDepartamento(string id)
+        {
+            var result = false;
+            try
+            {
+                if (_database.Context.State != ConnectionState.Open) _database.Context.Open();
+
+                var command = _database.Context.CreateCommand();
+                command.CommandText = "SELECT COUNT(1) FROM Departamento WHERE id = @id";
+                command.Parameters.AddWithValue("@id", id);
+                var count = (int)command.ExecuteScalar();
+                if (count > 0) return result = true;
+                _database.Context.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error: " + ex);
+            }
+            return result;
+        }
+        public bool ExisteIdMunicipio(string id)
+        {
+            var result = false;
+            try
+            {
+                if (_database.Context.State != ConnectionState.Open) _database.Context.Open();
+
+                var command = _database.Context.CreateCommand();
+                command.CommandText = "SELECT COUNT(1) FROM Municipio WHERE id = @id";
+                command.Parameters.AddWithValue("@id", id);
+                var count = (int)command.ExecuteScalar();
+                if (count > 0) return result = true;
+                _database.Context.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error: " + ex);
+            }
+            return result;
+        }
+        public bool ExisteIdTipoSangre(string id)
+        {
+            var result = false;
+            try
+            {
+                if (_database.Context.State != ConnectionState.Open) _database.Context.Open();
+
+                var command = _database.Context.CreateCommand();
+                command.CommandText = "SELECT COUNT(1) FROM Tipo_Sangre WHERE id = @id";
                 command.Parameters.AddWithValue("@id", id);
                 var count = (int)command.ExecuteScalar();
                 if (count > 0) return result = true;

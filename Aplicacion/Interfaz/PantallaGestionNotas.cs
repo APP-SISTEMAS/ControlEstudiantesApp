@@ -1,5 +1,4 @@
-﻿
-using Aplicacion.Gestores;
+﻿using Aplicacion.Gestores;
 using Aplicacion.Models;
 using System;
 namespace Aplicacion.Interfaz
@@ -47,7 +46,6 @@ namespace Aplicacion.Interfaz
                                 Console.ForegroundColor = ConsoleColor.Green;
                                 Console.WriteLine("Ingrese el Id del Estudiante:");
                                 nota.IdEstudiante = Convert.ToInt32(Console.ReadLine());
-                                Console.Clear();
                                 result= gestionEstudiante1.ExisteIdEstudiante(nota.IdEstudiante);
                                 if (!result)
                                 {
@@ -62,7 +60,6 @@ namespace Aplicacion.Interfaz
                                 Console.ForegroundColor = ConsoleColor.Green;
                                 Console.WriteLine("Ingrese el Id de la Asignatura:");
                                 nota.IdAsignatura = Convert.ToInt32(Console.ReadLine());
-                                Console.Clear();
                                 result = gestionAsignatura1.ExisteIdAsignatura(nota.IdAsignatura);
                                 if (!result)
                                 {
@@ -136,22 +133,19 @@ namespace Aplicacion.Interfaz
                             {
                                 Console.Clear();
                                 Console.ForegroundColor = ConsoleColor.DarkGreen;
-                                Console.WriteLine("Actualizar Nota del Estudiante");
-                                Console.WriteLine("===================");
+                                Console.WriteLine("\tActualizar Nota del Estudiante");
+                                Console.WriteLine("==========================================");
 
                                 gestionEstudiante.ListarEstudiantes();
                                 Console.ForegroundColor = ConsoleColor.Green;
                                 Console.WriteLine("Ingrese el Id del Estudiante:");
                                 int idEstudiante = Convert.ToInt32(Console.ReadLine());
-                                Console.Clear();
                                 result = gestionEstudiante1.ExisteIdEstudiante(idEstudiante);
                                 if (!result)
                                 {
                                     Console.ForegroundColor = ConsoleColor.Red;
                                     Console.WriteLine("Este estudiante no es Valido");
                                     Console.ReadKey();
-                                    Console.ResetColor();
-                                    Console.Clear();
                                     break;
                                 }
                                 result = gestionNotas.VerificarSiHayNotasPorAlumno(idEstudiante);
@@ -160,8 +154,6 @@ namespace Aplicacion.Interfaz
                                     Console.ForegroundColor = ConsoleColor.Red;
                                     Console.WriteLine("Este estudiante no tiene notas registradas");
                                     Console.ReadKey();
-                                    Console.ResetColor();
-                                    Console.Clear();
                                     break;
                                 }
 
@@ -169,7 +161,6 @@ namespace Aplicacion.Interfaz
                                 Console.ForegroundColor = ConsoleColor.Green;
                                 Console.WriteLine("Ingrese el Id de la Asignatura:");
                                 int idAsignatura = Convert.ToInt32(Console.ReadLine());
-                                Console.Clear();
                                 result = gestionAsignatura1.ExisteIdAsignatura(idAsignatura);
                                 if (!result)
                                 {

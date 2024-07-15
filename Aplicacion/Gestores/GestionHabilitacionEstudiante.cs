@@ -167,5 +167,45 @@ namespace Aplicacion.Gestores
                 throw new Exception("Error: " + ex);
             }
         }
+        public bool ExisteIdEstudianteInactivo(int id)
+        {
+            var result = false;
+            try
+            {
+                if (_database.Context.State != ConnectionState.Open) _database.Context.Open();
+
+                var command = _database.Context.CreateCommand();
+                command.CommandText = "SELECT COUNT(1) FROM Estudiante WHERE id = @id and activo=0";
+                command.Parameters.AddWithValue("@id", id);
+                var count = (int)command.ExecuteScalar();
+                if (count > 0) return result = true;
+                _database.Context.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error: " + ex);
+            }
+            return result;
+        }
+        public bool ExisteIdEstudianteHabilitado(int id)
+        {
+            var result = false;
+            try
+            {
+                if (_database.Context.State != ConnectionState.Open) _database.Context.Open();
+
+                var command = _database.Context.CreateCommand();
+                command.CommandText = "SELECT COUNT(1) FROM Estudiante WHERE id = @id and activo=1";
+                command.Parameters.AddWithValue("@id", id);
+                var count = (int)command.ExecuteScalar();
+                if (count > 0) return result = true;
+                _database.Context.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error: " + ex);
+            }
+            return result;
+        }
     }
 }
