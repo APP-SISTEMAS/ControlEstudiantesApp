@@ -162,7 +162,7 @@ namespace Aplicacion.Gestores
                     "Cast(ROUND(SUM(N.promedio) / (select COUNT(activo) from Asignatura where activo=1),2)as decimal(5,2))as promedio," +
                     " CASE WHEN(SUM(N.promedio)/ (select COUNT(activo) from Asignatura where activo=1) >= 65 AND SUM(N.promedio)/ (select COUNT(activo) " +
                     "from Asignatura where activo=1) <= 100) THEN 1 ELSE 0 END as aprobado " +
-                    "from Notas N inner join Estudiante E on E.id = N.id_estudiante inner join Asignatura A on A.id = N.id_asignatura group by E.id,E.nombre,E.apellido";
+                    "from Notas N inner join Estudiante E on E.id = N.id_estudiante inner join Asignatura A on A.id = N.id_asignatura where A.activo=1 group by E.id,E.nombre,E.apellido";
                 data.Load(command.ExecuteReader());
                 List<Nota> notas = new List<Nota>();
                 foreach (DataRow item in data.Rows)

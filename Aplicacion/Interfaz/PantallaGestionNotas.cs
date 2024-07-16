@@ -60,17 +60,7 @@ namespace Aplicacion.Interfaz
                                 Console.ForegroundColor = ConsoleColor.Green;
                                 Console.WriteLine("Ingrese el Id de la Asignatura:");
                                 nota.IdAsignatura = Convert.ToInt32(Console.ReadLine());
-                                result = gestionAsignatura1.ExisteIdAsignatura(nota.IdAsignatura);
-                                if (!result)
-                                {
-                                    Console.ForegroundColor = ConsoleColor.Red;
-                                    Console.WriteLine("Esta asignatura no es Valida");
-                                    Console.ReadKey();
-                                    Console.ResetColor();
-                                    Console.Clear();
-                                    break;
-                                }
-                                result = gestionNotas.ValidarIngresoNotaClaseActiva(nota.IdEstudiante, nota.IdAsignatura);
+                                result = gestionAsignatura1.ExisteIdAsignaturaActiva(nota.IdAsignatura);
                                 if (!result)
                                 {
                                     Console.ForegroundColor = ConsoleColor.Red;
@@ -85,6 +75,16 @@ namespace Aplicacion.Interfaz
                                 {
                                     Console.ForegroundColor = ConsoleColor.Red;
                                     Console.WriteLine("Este estudiante ya tiene notas registradas en esta clase");
+                                    Console.ReadKey();
+                                    Console.ResetColor();
+                                    Console.Clear();
+                                    break;
+                                }
+                                result = gestionNotas.ValidarIngresoNotaClaseActiva(nota.IdEstudiante, nota.IdAsignatura);
+                                if (!result)
+                                {
+                                    Console.ForegroundColor = ConsoleColor.Red;
+                                    Console.WriteLine("Esta asignatura no es Valida");
                                     Console.ReadKey();
                                     Console.ResetColor();
                                     Console.Clear();
@@ -161,21 +161,21 @@ namespace Aplicacion.Interfaz
                                 Console.ForegroundColor = ConsoleColor.Green;
                                 Console.WriteLine("Ingrese el Id de la Asignatura:");
                                 int idAsignatura = Convert.ToInt32(Console.ReadLine());
-                                result = gestionAsignatura1.ExisteIdAsignatura(idAsignatura);
+                                result = gestionAsignatura1.ExisteIdAsignaturaActiva(idAsignatura);
                                 if (!result)
                                 {
                                     Console.ForegroundColor = ConsoleColor.Red;
-                                    Console.WriteLine("Esta asignatura no es Valida");
+                                    Console.WriteLine("Esta clase no esta activa");
                                     Console.ReadKey();
                                     Console.ResetColor();
                                     Console.Clear();
                                     break;
                                 }
                                 result = gestionNotas.ValidarIngresoNotaClaseActiva(idEstudiante, idAsignatura);
-                                if (!result)
+                                if (result)
                                 {
                                     Console.ForegroundColor = ConsoleColor.Red;
-                                    Console.WriteLine("Esta clase no esta activa");
+                                    Console.WriteLine("Accion no valida");
                                     Console.ReadKey();
                                     Console.ResetColor();
                                     Console.Clear();

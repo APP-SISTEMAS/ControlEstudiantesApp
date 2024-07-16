@@ -103,7 +103,7 @@ namespace Aplicacion.Interfaz
                                 Console.ForegroundColor = ConsoleColor.Green;
                                 int idAsignatura = Convert.ToInt32(Console.ReadLine());
                                 Console.Clear();
-                                result = gestionAsignaturas.ExisteIdAsignatura(idAsignatura);
+                                result = gestionAsignaturas.ExisteIdAsignaturaActiva(idAsignatura);
                                 if (!result)
                                 {
                                     Console.ForegroundColor = ConsoleColor.Red;

@@ -1,4 +1,4 @@
-﻿using Aplicacion.Gestores;
+﻿ using Aplicacion.Gestores;
 using Aplicacion.Models;
 using System;
 using System.Collections.Generic;
@@ -231,14 +231,14 @@ namespace Aplicacion.Interfaz
                                 Console.ForegroundColor = ConsoleColor.Green;
                                 Console.WriteLine("Ingrese la corrección o actualización de la identificación (PRESIONE ENTER PARA NO MODIFICAR):");
                                 string nuevaIdentificacion = Console.ReadLine();
-                                if (!Regex.IsMatch(nuevaIdentificacion, @"^\d{4}-\d{4}-\d{5}$"))
+                                if (!string.IsNullOrEmpty(nuevaIdentificacion)) estudianteActualizar.Identificacion = nuevaIdentificacion;
+                                if (!Regex.IsMatch(estudianteActualizar.Identificacion, @"^\d{4}-\d{4}-\d{5}$"))
                                 {
                                     Console.ForegroundColor = ConsoleColor.Red;
                                     Console.WriteLine("Identificacion no valida, debe tener el formato 'xxxx-xxxx-xxxxx'");
                                     Console.ReadKey();
                                     break;
                                 }
-                                if (!string.IsNullOrEmpty(nuevaIdentificacion)) estudianteActualizar.Identificacion = nuevaIdentificacion;
 
                                 Console.ForegroundColor = ConsoleColor.White;
                                 Console.WriteLine("\nGénero registrado: " + estudianteActualizar.Genero);
@@ -266,8 +266,10 @@ namespace Aplicacion.Interfaz
                                 MostrarDepartamentos();
                                 Console.ForegroundColor = ConsoleColor.Green;
                                 Console.WriteLine("Ingrese la corrección o actualización del departamento (PRESIONE ENTER PARA NO MODIFICAR):");
-                                string nuevoDepartamento = Console.ReadLine();
-                                result = gestionEstudiante.ExisteIdDepartamento(nuevoDepartamento);
+                                string nuevoDepartamento = Console.ReadLine();                                
+                                if (string.IsNullOrEmpty(nuevoDepartamento)) estudianteActualizar.Departamento = ObtenerCodigoDepartamento(estudianteActualizar.Departamento).ToString();
+                                if (!string.IsNullOrEmpty(nuevoDepartamento)) estudianteActualizar.Departamento = nuevoDepartamento;
+                                result = gestionEstudiante.ExisteIdDepartamento(estudianteActualizar.Departamento);
                                 if (result == false)
                                 {
                                     Console.ForegroundColor = ConsoleColor.Red;
@@ -275,16 +277,16 @@ namespace Aplicacion.Interfaz
                                     Console.ReadKey();
                                     break;
                                 }
-                                if (string.IsNullOrEmpty(nuevoDepartamento)) estudianteActualizar.Departamento = ObtenerCodigoDepartamento(estudianteActualizar.Departamento).ToString();
-                                if (!string.IsNullOrEmpty(nuevoDepartamento)) estudianteActualizar.Departamento = nuevoDepartamento;
 
                                 Console.ForegroundColor = ConsoleColor.White;
                                 Console.WriteLine("\nMunicipio registrado: " + estudianteActualizar.Municipio);
                                 MostrarMunicipios(estudianteActualizar.Departamento);
                                 Console.ForegroundColor = ConsoleColor.Green;
                                 Console.WriteLine("Ingrese la corrección o actualización del municipio (PRESIONE ENTER PARA NO MODIFICAR):");
-                                string nuevoMunicipio = Console.ReadLine();
-                                result = gestionEstudiante.ExisteIdMunicipio(nuevoMunicipio);
+                                string nuevoMunicipio = Console.ReadLine();                                
+                                if (string.IsNullOrEmpty(nuevoMunicipio)) estudianteActualizar.Municipio = ObtenerCodigoMunicipio(estudianteActualizar.Municipio, estudianteActualizar.Departamento).ToString();
+                                if (!string.IsNullOrEmpty(nuevoMunicipio)) estudianteActualizar.Municipio = nuevoMunicipio;
+                                result = gestionEstudiante.ExisteIdMunicipio(estudianteActualizar.Municipio);
                                 if (result == false)
                                 {
                                     Console.ForegroundColor = ConsoleColor.Red;
@@ -292,8 +294,6 @@ namespace Aplicacion.Interfaz
                                     Console.ReadKey();
                                     break;
                                 }
-                                if (string.IsNullOrEmpty(nuevoMunicipio)) estudianteActualizar.Municipio = ObtenerCodigoMunicipio(estudianteActualizar.Municipio, estudianteActualizar.Departamento).ToString();
-                                if (!string.IsNullOrEmpty(nuevoMunicipio)) estudianteActualizar.Municipio = nuevoMunicipio;
 
                                 Console.ForegroundColor = ConsoleColor.White;
                                 Console.WriteLine("\nDirección registrada: " + estudianteActualizar.Direccion);
@@ -317,6 +317,14 @@ namespace Aplicacion.Interfaz
                                 string nuevoTipoSangre = Console.ReadLine();
                                 if (string.IsNullOrEmpty(nuevoTipoSangre)) estudianteActualizar.TipoSangre = ObtenerCodigoTipoSangre(estudianteActualizar.TipoSangre).ToString();
                                 if (!string.IsNullOrEmpty(nuevoTipoSangre)) estudianteActualizar.TipoSangre = nuevoTipoSangre;
+                                result = gestionEstudiante.ExisteIdTipoSangre(estudianteActualizar.TipoSangre);
+                                if (result == false)
+                                {
+                                    Console.ForegroundColor = ConsoleColor.Red;
+                                    Console.WriteLine("El tipo de sangre seleccionado no existe");
+                                    Console.ReadKey();
+                                    break;
+                                }
 
                                 Console.ForegroundColor = ConsoleColor.White;
                                 Console.WriteLine("\nTutor registrado: " + estudianteActualizar.Tutor);
@@ -324,7 +332,6 @@ namespace Aplicacion.Interfaz
                                 Console.WriteLine("Ingrese la corrección o actualización del tutor (PRESIONE ENTER PARA NO MODIFICAR):");
                                 string nuevoTutor = Console.ReadLine();
                                 if (!string.IsNullOrEmpty(nuevoTutor)) estudianteActualizar.Tutor = nuevoTutor;
-                                ;
                                 gestionEstudiante.ActualizarEstudiante(estudianteActualizar, idEstudianteActualizar);
                                 Console.ForegroundColor = ConsoleColor.DarkYellow;
                                 Console.WriteLine("Estudiante actualizado correctamente.");

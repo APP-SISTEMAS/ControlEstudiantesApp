@@ -270,7 +270,7 @@ namespace Aplicacion.Gestores
             }
             return result;
         }
-        public bool ExisteIdMunicipio(string id)
+        public bool ExisteIdMunicipio(string idMunicipio)
         {
             var result = false;
             try
@@ -278,8 +278,8 @@ namespace Aplicacion.Gestores
                 if (_database.Context.State != ConnectionState.Open) _database.Context.Open();
 
                 var command = _database.Context.CreateCommand();
-                command.CommandText = "SELECT COUNT(1) FROM Municipio WHERE id = @id";
-                command.Parameters.AddWithValue("@id", id);
+                command.CommandText = "SELECT COUNT(1) FROM Municipio WHERE id = @idMunicipio";
+                command.Parameters.AddWithValue("@idMunicipio", idMunicipio);
                 var count = (int)command.ExecuteScalar();
                 if (count > 0) return result = true;
                 _database.Context.Close();
